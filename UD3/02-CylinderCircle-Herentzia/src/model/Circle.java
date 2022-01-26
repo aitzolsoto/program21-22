@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.Objects;
+
 /**
  *
  * @author soto.aitzol
@@ -18,17 +20,17 @@ public class Circle {
    public Circle() {
       this.radius = 1.0;
       this.color = "red";
-      System.out.println("Construced a Circle with Circle()");  // for debugging
+      //System.out.println("Construced a Circle with Circle()");  // for debugging
    }
    public Circle(double radius) {
       this.radius = radius;
       this.color = "red";
-      System.out.println("Construced a Circle with Circle(radius)");  // for debugging
+      //System.out.println("Construced a Circle with Circle(radius)");  // for debugging
    }
    public Circle(double radius, String color) {
       this.radius = radius;
       this.color = color;
-      System.out.println("Construced a Circle with Circle(radius, color)");  // for debugging
+      //System.out.println("Construced a Circle with Circle(radius, color)");  // for debugging
    }
 
    // public getters and setters for the private variables
@@ -54,4 +56,33 @@ public class Circle {
    public double getArea() {
       return radius * radius * Math.PI;
    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 43 * hash + (int) (Double.doubleToLongBits(this.radius) ^ (Double.doubleToLongBits(this.radius) >>> 32));
+        hash = 43 * hash + Objects.hashCode(this.color);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Circle other = (Circle) obj;
+        if (Double.doubleToLongBits(this.radius) != Double.doubleToLongBits(other.radius)) {
+            return false;
+        }
+        if (!Objects.equals(this.color, other.color)) {
+            return false;
+        }
+        return true;
+    }
 }

@@ -20,22 +20,22 @@ public class Cylinder extends Circle {
    public Cylinder() {
       super();  // invoke superclass' constructor Circle()
       this.height = 1.0;
-      System.out.println("Constructed a Cylinder with Cylinder()");  // for debugging
+      //System.out.println("Constructed a Cylinder with Cylinder()");  // for debugging
    }
    public Cylinder(double height) {
       super();  // invoke superclass' constructor Circle()
       this.height = height;
-      System.out.println("Constructed a Cylinder with Cylinder(height)");  // for debugging
+      //System.out.println("Constructed a Cylinder with Cylinder(height)");  // for debugging
    }
    public Cylinder(double height, double radius) {
       super(radius);  // invoke superclass' constructor Circle(radius)
       this.height = height;
-      System.out.println("Constructed a Cylinder with Cylinder(height, radius)");  // for debugging
+      //System.out.println("Constructed a Cylinder with Cylinder(height, radius)");  // for debugging
    }
    public Cylinder(double height, double radius, String color) {
       super(radius, color);  // invoke superclass' constructor Circle(radius, color)
       this.height = height;
-      System.out.println("Constructed a Cylinder with Cylinder(height, radius, color)");  // for debugging
+      //System.out.println("Constructed a Cylinder with Cylinder(height, radius, color)");  // for debugging
    }
 
    // Getter and Setter
@@ -48,7 +48,11 @@ public class Cylinder extends Circle {
 
    /** Returns the volume of this Cylinder */
    public double getVolume() {
-      return getArea()*height;   // Use Circle's getArea()
+      return super.getArea()*height;   // Use Circle's getArea()
+   }
+   
+   public double getArea(){
+       return (2 * Math.PI * getRadius() * getRadius()) + (height * 2 * Math.PI * getRadius());  
    }
 
    /** Returns a self-descriptive String */
