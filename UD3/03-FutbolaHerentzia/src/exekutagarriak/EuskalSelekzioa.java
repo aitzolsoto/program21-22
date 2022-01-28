@@ -5,6 +5,7 @@
  */
 package exekutagarriak;
 
+import static exekutagarriak.EuskalSelekzioaMenua.selekzioa;
 import java.util.ArrayList;
 import model.Demarcacion;
 import model.Entrenador;
@@ -27,7 +28,7 @@ import model.Masajista;
 public class EuskalSelekzioa {
     
     public static int azkenId = 0; 
-    private static ArrayList<Futbolista> selekzioa = new ArrayList<Futbolista>();
+    public static ArrayList<IntegranteSeleccion> selekzioa = new ArrayList<IntegranteSeleccion>();
     /** Programa honek metodo desberdinei deituko die banan banan. 
      *  Beharbada ez diozu koherentzia handirik topatuko programa osoari. 
      *  Ariketaren helburua da beste pakete bateko klase hierarkia erabiltzen trebatzea. 
@@ -68,12 +69,9 @@ public class EuskalSelekzioa {
      * Objektu bakoitza sortu ondoren, bere datuak inprimatu eta kontzentratu eta bidaiatuko dute
      */
     public static void bestePartaideBatzukSortu(){
-        azkenId += 1;
-        Entrenador entrenador1 = new Entrenador(azkenId, "Javier", "Clemente", 68, "49543");
-        azkenId += 1;
-        Masajista masajista1 = new Masajista(azkenId, "Iñaki", "Sertxiberrieta", 37, "Fisioterapeuta", 12);
-        azkenId += 1;
-        IntegranteSeleccion integrante1 = new IntegranteSeleccion(azkenId, "Ander", "Etxeburu", 42);
+        Entrenador entrenador1 = new Entrenador(++azkenId, "Javier", "Clemente", 68, "49543");
+        Masajista masajista1 = new Masajista(++azkenId, "Iñaki", "Sertxiberrieta", 37, "Fisioterapeuta", 12);
+        IntegranteSeleccion integrante1 = new IntegranteSeleccion(++azkenId, "Ander", "Etxeburu", 42);
         
         System.out.println(entrenador1);
         System.out.println(masajista1);
@@ -105,6 +103,11 @@ public class EuskalSelekzioa {
         selekzioa.add(new Futbolista(++azkenId, "Jesus", "Areso", 22, 15, Demarcacion.DEF));
         selekzioa.add(new Futbolista(++azkenId, "Iñigo", "Vicente", 24, 16, Demarcacion.DEL));
         selekzioa.add(new Futbolista(++azkenId, "Daniel", "Vivian", 22, 17, Demarcacion.DEF));
+        selekzioa.add(new Entrenador(++azkenId, "Francisco", "Paladino", 57, "67555"));
+        selekzioa.add(new Entrenador(++azkenId,"Joseba" , "Nuñez", 60, "54202"));
+        selekzioa.add(new Entrenador(++azkenId,"Markel", "Lautadahandi",62,"10002"));
+        selekzioa.add(new Masajista(++azkenId, "Iñaki", "Sertxiberrieta", 37, "Fisioterapeuta", 15));
+        selekzioa.add(new IntegranteSeleccion(++azkenId, "Ander", "Etxeburu", 42));
     }
     
     /** ArrayListetik objektu bat ezabatzen du. Aurkitzen ez badu false itzuliko du

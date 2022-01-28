@@ -27,5 +27,7 @@ public class Test {
         System.out.println(f1);
         System.out.println(entrenador1.getNombre() + " " + entrenador1.getIdFederacion());
         System.out.println(masajista1.getNombre() + " " + masajista1.getTitulacion());
+        
+        
     }
 }
