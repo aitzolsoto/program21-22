@@ -152,12 +152,23 @@ public class EuskalSelekzioaMenua {
     }
     
     public static void futbolariakAlfabetikokiIkusi(){
-        for (int i = 0; i < 25; i++) {
-            for (int j = 0; j < selekzioa.size(); j++) {
-                Object partaidea = selekzioa.get(j);
-                //if(partaidea instanceof Futbolista && selekzioa.get(j).getApellido().startsWith(char(i+96))){
-                    //ASCII
-                //}
+        ArrayList<IntegranteSeleccion> temp = new ArrayList<IntegranteSeleccion>();
+        //Ordenatu
+        for (int i = 0; i < selekzioa.size(); i++) {
+            for (int j = 0; j < selekzioa.size()-1; j++) {
+                if(selekzioa.get(j).getApellido().compareTo(selekzioa.get(j+1).getApellido()) > 0){
+                    temp.add(0, selekzioa.get(j+1));
+                    selekzioa.set(j+1, selekzioa.get(j));
+                    selekzioa.set(j, temp.get(0));
+                }
+            }
+        }
+        
+        System.out.printf("%15s %15s %15s %15s\n", "ID" , "IZENA", "ABIZENA", "URTEAK");
+        for (int i = 0; i < selekzioa.size(); i++) {
+            Object futbolaria = selekzioa.get(i);
+            if(futbolaria instanceof Futbolista){
+                System.out.printf("%15s %15s %15s %15s\n", selekzioa.get(i).getId() , selekzioa.get(i).getNombre(), selekzioa.get(i).getApellido(), selekzioa.get(i).getEdad());
             }
         }
     }
