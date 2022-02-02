@@ -75,8 +75,9 @@ public class EuskalSelekzioaMenua {
         int masajistak = 0;
         int bestePartaideak = 0;
         for (int i = 0; i < selekzioa.size(); i++) {
-            System.out.printf("%15s %15s %15s %15s \n", "ID" , "IZENA", "ABIZENA", "URTEAK");
-            System.out.printf("%15d %15s %15s %15d \n", selekzioa.get(i).getId(), selekzioa.get(i).getNombre(), selekzioa.get(i).getApellido(), selekzioa.get(i).getEdad());
+            System.out.println(selekzioa.get(i).toString());
+            //System.out.printf("%15s %15s %15s %15s \n", "ID" , "IZENA", "ABIZENA", "URTEAK");
+            //System.out.printf("%15d %15s %15s %15d \n", selekzioa.get(i).getId(), selekzioa.get(i).getNombre(), selekzioa.get(i).getApellido(), selekzioa.get(i).getEdad());
             Object partaidea = selekzioa.get(i);
             if(partaidea instanceof Futbolista){
                 futbolariak++;

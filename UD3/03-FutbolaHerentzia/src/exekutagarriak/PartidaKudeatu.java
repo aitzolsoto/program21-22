@@ -5,9 +5,12 @@
  */
 package exekutagarriak;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 import model.Demarcacion;
 import model.Entrenador;
@@ -62,7 +65,7 @@ public class PartidaKudeatu {
         partidak[sortutakoPartidak].txartelaJarri(new Futbolista(12, "Aihen", "Muñoz", 24, 12, Demarcacion.DEF));
         sortutakoPartidak++;
         //2.Partida
-        partidak[sortutakoPartidak] = new Partida(LocalDate.of(2016, 12, 30), "Tunez");
+        partidak[sortutakoPartidak] = new Partida(LocalDate.of(2016, 12, 20), "Tunez");
         partidak[sortutakoPartidak].txartelaJarri(new Futbolista(14, "Aritz", "Elustondo", 27, 14, Demarcacion.DEF));
         partidak[sortutakoPartidak].txartelaJarri(new Futbolista(12, "Aihen", "Muñoz", 24, 12, Demarcacion.DEF));
         partidak[sortutakoPartidak].txartelaJarri(new Futbolista(11, "Asier", "Villalibre", 24, 11, Demarcacion.DEL));
@@ -116,14 +119,67 @@ public class PartidaKudeatu {
         } while (aukera != 'E');
         System.out.println(partidak[sortutakoPartidak]);
         sortutakoPartidak++;
+    }
 
+    public static void jokalarienTxartelak() {
+        int txartelakGuztira = 0;
+        ArrayList<Futbolista> ateratakoTxartelGuztiak = new ArrayList<>();
+        //Jokalariak gorde eta txartelak kontatu
+        for (int i = 0; i < partidak.length; i++) {
+            if (partidak[i] != null) {
+                for (int j = 0; j < partidak[i].getTxarterlak().size(); j++) {
+                    ateratakoTxartelGuztiak.add(partidak[i].getTxarterlak().get(j));
+                }
+                txartelakGuztira += partidak[i].getTxarterlak().size();
+            }
+        }
+
+        int count1 = Collections.frequency(ateratakoTxartelGuztiak, ateratakoTxartelGuztiak.get(0));
+        System.out.println(ateratakoTxartelGuztiak.get(0).getNombre() + ": " + count1);
+
+        System.out.println("Txartelak guztira: " + txartelakGuztira);
+    }
+
+    public static int jokatutakoPartidaKopurua() {
+        int partidaKopurua = 0;
+        for (int i = 0; i < partidak.length; i++) {
+            if (partidak[i] != null) {
+                partidaKopurua++;
+            }
+        }
+
+       
+        return partidaKopurua;
+    }
+
+    public static void partidakBatazBeste() {
+        long egunakGuztira = 0;
+        int partidaBatazBeste = 0;
+        int jokatutakoPartidak = 0;
+        LocalDate partida1;
+        LocalDate partida2;
+        for (int i = 0; i < partidak.length; i++) {
+            if (partidak[i] != null && partidak[i + 1] != null) {
+                partida1 = partidak[i].getData();
+                partida2 = partidak[i+1].getData();
+                egunakGuztira += ChronoUnit.DAYS.between(partida1, partida2);
+            }
+
+        }
+        
+        jokatutakoPartidak = jokatutakoPartidaKopurua();
+        partidaBatazBeste = (int)egunakGuztira / (jokatutakoPartidak-1);
+        System.out.println("Egunak: " + egunakGuztira);
+        System.out.println("Partido bat jokatzen da " + partidaBatazBeste + " egunero");
     }
 
     public static void main(String[] args) {
         selekzioOsoaSortu();
         partidak = new Partida[20];
         partidakAsmatu();
-        partidaBatenDatuakEskatu();
+        // partidaBatenDatuakEskatu();
+         System.out.println("Jokatutako partida kopurua: " + jokatutakoPartidaKopurua());
+        partidakBatazBeste();
     }
 
 }
