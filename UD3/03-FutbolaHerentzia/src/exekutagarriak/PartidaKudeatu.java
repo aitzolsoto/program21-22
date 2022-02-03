@@ -59,6 +59,7 @@ public class PartidaKudeatu {
     }
 
     public static void partidakAsmatu() {
+        partidak = new Partida[20];
         //1.Partida
         partidak[sortutakoPartidak] = new Partida(LocalDate.of(2016, 05, 27), "Corcega");
         partidak[sortutakoPartidak].txartelaJarri(new Futbolista(5, "Iñigo", "Martinez", 30, 5, Demarcacion.DEF));
@@ -122,22 +123,97 @@ public class PartidaKudeatu {
     }
 
     public static void jokalarienTxartelak() {
-        int txartelakGuztira = 0;
-        ArrayList<Futbolista> ateratakoTxartelGuztiak = new ArrayList<>();
-        //Jokalariak gorde eta txartelak kontatu
+        /*ArrayList<Futbolista> ateratakoTxartelGuztiak = new ArrayList<>();
+        //Txartela duten jokalariak gorde
         for (int i = 0; i < partidak.length; i++) {
             if (partidak[i] != null) {
                 for (int j = 0; j < partidak[i].getTxarterlak().size(); j++) {
                     ateratakoTxartelGuztiak.add(partidak[i].getTxarterlak().get(j));
                 }
-                txartelakGuztira += partidak[i].getTxarterlak().size();
             }
         }
+        //Txartelak kontatu
+        IntegranteSeleccion partaidea;
+        IntegranteSeleccion txartelGehien = null;
+        int txartelak;
+        int txartelMaximoa = 0;
+        System.out.println("Jokalarien txartelak: ");
+        for (int i = 0; i < selekzioa.size(); i++) {
+            partaidea = selekzioa.get(i);
+            txartelak = 0;
+            if(partaidea instanceof Futbolista){
+                //Txartelak kontatu
+                for (int j = 0; j < ateratakoTxartelGuztiak.size(); j++) {
+                    if(partaidea.getId() == ateratakoTxartelGuztiak.get(j).getId()){
+                        txartelak++;
+                    }
+                }
+                //Txartel gehienak
+                if(txartelak > txartelMaximoa){
+                   txartelGehien = partaidea;
+                   txartelMaximoa = txartelak;
+                }
+                System.out.println(partaidea.getNombre() + ": " + txartelak);
+            }
+        }
+        //Txartel gehien dituen jokalaria
+        System.out.println("Txartel gehien dituen jokalaria: " + txartelGehien.getNombre() + "," + txartelMaximoa + " txartel");*/
+        IntegranteSeleccion partaidea;
+        IntegranteSeleccion txartelGehienekoJokalaria = null;
+        int ateratakoTxartelak;
+        int txartelMaximoa = 0;
+        for (int i = 0; i < selekzioa.size(); i++) {
+            ateratakoTxartelak = 0;
+            partaidea = selekzioa.get(i);
+            if (partaidea instanceof Futbolista) {
+                for (int j = 0; j < partidak.length; j++) {
+                    if (partidak[j] != null) {
+                        for (int k = 0; k < partidak[j].getTxarterlak().size(); k++) {
+                            if (partaidea.getId() == partidak[j].getTxarterlak().get(k).getId()) {
+                                ateratakoTxartelak++;
+                            }
+                        }
+                    }
+                }
+                if (ateratakoTxartelak > txartelMaximoa) {
+                    txartelGehienekoJokalaria = partaidea;
+                    txartelMaximoa = ateratakoTxartelak;
+                }
+                System.out.println(partaidea.getNombre() + ": " + ateratakoTxartelak);
+            }
+        }
+        System.out.println("Txartel gehien dituen jokalaria: " + txartelGehienekoJokalaria.getNombre() + "," + txartelMaximoa + " txartel");
+    }
 
-        int count1 = Collections.frequency(ateratakoTxartelGuztiak, ateratakoTxartelGuztiak.get(0));
-        System.out.println(ateratakoTxartelGuztiak.get(0).getNombre() + ": " + count1);
+    public static String txartelakIkusiFrame(int jokalariarenID) {
+        IntegranteSeleccion partaidea;
+        int ateratakoTxartelak = 0;
+        partaidea = selekzioa.get(jokalariarenID);
 
-        System.out.println("Txartelak guztira: " + txartelakGuztira);
+        if (partaidea instanceof Futbolista) {
+            for (int j = 0; j < partidak.length; j++) {
+                if (partidak[j] != null) {
+                    for (int k = 0; k < partidak[j].getTxarterlak().size(); k++) {
+                        if (partaidea.getId() == partidak[j].getTxarterlak().get(k).getId()) {
+                            ateratakoTxartelak++;
+                        }
+                    }
+                }
+            }
+            if(ateratakoTxartelak > 0){
+                return partaidea.getNombre() + ", " + ateratakoTxartelak;
+            }
+        }
+        return null;
+    }
+    
+    public static void partidaJokatu(String urteaStr,String hilabeteaStr,String egunaStr,String aurkaria){
+        int urtea = Integer.parseInt(urteaStr);
+        int hilabetea = Integer.parseInt(hilabeteaStr);
+        int eguna = Integer.parseInt(egunaStr);
+        
+        partidak[sortutakoPartidak] = new Partida(LocalDate.of(urtea, hilabetea, eguna), aurkaria);
+        sortutakoPartidak++;
     }
 
     public static int jokatutakoPartidaKopurua() {
@@ -148,7 +224,6 @@ public class PartidaKudeatu {
             }
         }
 
-       
         return partidaKopurua;
     }
 
@@ -161,25 +236,26 @@ public class PartidaKudeatu {
         for (int i = 0; i < partidak.length; i++) {
             if (partidak[i] != null && partidak[i + 1] != null) {
                 partida1 = partidak[i].getData();
-                partida2 = partidak[i+1].getData();
+                partida2 = partidak[i + 1].getData();
                 egunakGuztira += ChronoUnit.DAYS.between(partida1, partida2);
             }
 
         }
-        
+
         jokatutakoPartidak = jokatutakoPartidaKopurua();
-        partidaBatazBeste = (int)egunakGuztira / (jokatutakoPartidak-1);
+        partidaBatazBeste = (int) egunakGuztira / (jokatutakoPartidak - 1);
         System.out.println("Egunak: " + egunakGuztira);
         System.out.println("Partido bat jokatzen da " + partidaBatazBeste + " egunero");
     }
 
     public static void main(String[] args) {
         selekzioOsoaSortu();
-        partidak = new Partida[20];
+        //partidak = new Partida[20];
         partidakAsmatu();
-        // partidaBatenDatuakEskatu();
-         System.out.println("Jokatutako partida kopurua: " + jokatutakoPartidaKopurua());
+        partidaBatenDatuakEskatu();
+        System.out.println("Jokatutako partida kopurua: " + jokatutakoPartidaKopurua());
         partidakBatazBeste();
+        jokalarienTxartelak();
     }
 
 }
