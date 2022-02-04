@@ -6,6 +6,10 @@
 package frameak;
 
 import exekutagarriak.PartidaKudeatu;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import model.Demarcacion;
 import model.Futbolista;
 import model.IntegranteSeleccion;
 
@@ -21,21 +25,34 @@ public class JokatutakoPartidak extends javax.swing.JFrame {
     public JokatutakoPartidak() {
         initComponents();
         jTextAreaDatak.setEditable(false);
+        jTextAreaAurkariak.setEditable(false);
+        jTextAreaTxartelak.setEditable(false);
+        this.setResizable(false);
         PartidaKudeatu.partidakAsmatu();
         PartidaKudeatu.selekzioOsoaSortu();
         datuakEguneratu();
+        resetLista();
+        comboBoxBete();
     }
-    
-    private void resetLista(){
+
+    private void resetLista() {
         IntegranteSeleccion futbolaria;
+        DefaultListModel listJokalariak = new DefaultListModel();
         for (int i = 0; i < PartidaKudeatu.selekzioa.size(); i++) {
             futbolaria = PartidaKudeatu.selekzioa.get(i);
-            if(futbolaria instanceof Futbolista){
-                
+            if (futbolaria instanceof Futbolista && i < 9) {
+                listJokalariak.addElement("0" + futbolaria.getId() + ", " + futbolaria.getNombre());
+            } else {
+                listJokalariak.addElement(futbolaria.getId() + ", " + futbolaria.getNombre());
             }
         }
+        jListJokalariak.setModel(listJokalariak);
+
+        DefaultListModel listTxartelak = new DefaultListModel();
+        jListTxartelak.setModel(listTxartelak);
     }
-    private void datuakEguneratu(){
+
+    private void datuakEguneratu() {
         String datakStr = "";
         String aurkariakStr = "";
         String txartelakStr = "";
@@ -44,23 +61,46 @@ public class JokatutakoPartidak extends javax.swing.JFrame {
                 if (i == 0) {
                     jTextAreaDatak.setText("" + PartidaKudeatu.partidak[i].getData());
                     jTextAreaAurkariak.setText(PartidaKudeatu.partidak[i].getAurkaria());
-                }else{
+                } else {
                     datakStr = jTextAreaDatak.getText();
                     aurkariakStr = jTextAreaAurkariak.getText();
                     jTextAreaDatak.setText(datakStr + "\n" + PartidaKudeatu.partidak[i].getData());
-                jTextAreaAurkariak.setText(aurkariakStr + "\n" + PartidaKudeatu.partidak[i].getAurkaria());
+                    jTextAreaAurkariak.setText(aurkariakStr + "\n" + PartidaKudeatu.partidak[i].getAurkaria());
                 }
 
-                
             }
         }
 
         for (int i = 0; i < PartidaKudeatu.selekzioa.size(); i++) {
-            if(i == 0 && PartidaKudeatu.txartelakIkusiFrame(i) != null){
+            if (i == 0 && PartidaKudeatu.txartelakIkusiFrame(i) != null) {
                 jTextAreaTxartelak.setText(PartidaKudeatu.txartelakIkusiFrame(i));
-            }else if(i != 0 && PartidaKudeatu.txartelakIkusiFrame(i) != null){
+            } else if (i != 0 && PartidaKudeatu.txartelakIkusiFrame(i) != null) {
                 txartelakStr = jTextAreaTxartelak.getText();
                 jTextAreaTxartelak.setText(txartelakStr + "\n" + PartidaKudeatu.txartelakIkusiFrame(i));
+            }
+        }
+    }
+
+    private void comboBoxBete() {
+        //Urtea
+        for (int i = 2022; i >= 1990; i--) {
+            jComboBoxUrtea.addItem(String.valueOf(i));
+        }
+        //Hilabetea
+        for (int i = 1; i <= 12; i++) {
+            if (i < 10) {
+                jComboBoxHilabetea.addItem("0" + String.valueOf(i));
+            } else {
+                jComboBoxHilabetea.addItem(String.valueOf(i));
+            }
+
+        }
+        //Eguna
+        for (int i = 1; i <= 31; i++) {
+            if (i < 10) {
+                jComboBoxEguna.addItem("0" + String.valueOf(i));
+            } else {
+                jComboBoxEguna.addItem(String.valueOf(i));
             }
         }
     }
@@ -85,12 +125,9 @@ public class JokatutakoPartidak extends javax.swing.JFrame {
         jTextAreaTxartelak = new javax.swing.JTextArea();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextFieldUrtea = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jTextFieldAurkariaSartu = new javax.swing.JTextField();
-        jTextFieldHilabetea = new javax.swing.JTextField();
-        jTextFieldEguna = new javax.swing.JTextField();
         jButtonPartidaJokatu = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -99,6 +136,11 @@ public class JokatutakoPartidak extends javax.swing.JFrame {
         jListTxartelak = new javax.swing.JList<>();
         jLabel9 = new javax.swing.JLabel();
         jLabel50 = new javax.swing.JLabel();
+        jButtonGehitu = new javax.swing.JButton();
+        jButtonKendu = new javax.swing.JButton();
+        jComboBoxUrtea = new javax.swing.JComboBox<>();
+        jComboBoxHilabetea = new javax.swing.JComboBox<>();
+        jComboBoxEguna = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -159,11 +201,6 @@ public class JokatutakoPartidak extends javax.swing.JFrame {
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("TXARTELAK");
 
-        jListJokalariak.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane4.setViewportView(jListJokalariak);
 
         jScrollPane5.setViewportView(jListTxartelak);
@@ -171,6 +208,26 @@ public class JokatutakoPartidak extends javax.swing.JFrame {
         jLabel9.setText("JOKALARIAK");
 
         jLabel50.setText("ATERATAKO TXARTELAK");
+
+        jButtonGehitu.setText(">");
+        jButtonGehitu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGehituActionPerformed(evt);
+            }
+        });
+
+        jButtonKendu.setText("<");
+        jButtonKendu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonKenduActionPerformed(evt);
+            }
+        });
+
+        jComboBoxUrtea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxUrteaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -190,51 +247,53 @@ public class JokatutakoPartidak extends javax.swing.JFrame {
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(65, 65, 65)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jScrollPane3)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(65, 65, 65)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(193, 193, 193)
-                                .addComponent(jTextFieldAurkariaSartu, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
+                                .addGap(220, 220, 220)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(36, 36, 36)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTextFieldAurkariaSartu, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(3, 3, 3)
+                                                .addComponent(jComboBoxUrtea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(32, 32, 32)
+                                                .addComponent(jComboBoxHilabetea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(31, 31, 31)
+                                                .addComponent(jComboBoxEguna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(39, 39, 39)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(jButtonPartidaJokatu)
+                                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(36, 36, 36)
-                                                .addComponent(jTextFieldUrtea, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(24, 24, 24)
-                                                .addComponent(jTextFieldHilabetea, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jTextFieldEguna, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel9)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jLabel50))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGap(61, 61, 61))))))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonPartidaJokatu)
-                .addGap(205, 205, 205))
+                                        .addComponent(jLabel9)
+                                        .addGap(54, 54, 54))
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButtonGehitu, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jButtonKendu, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel50, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                        .addGap(42, 42, 42))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,9 +302,9 @@ public class JokatutakoPartidak extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -255,35 +314,39 @@ public class JokatutakoPartidak extends javax.swing.JFrame {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(81, 81, 81)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTextFieldUrtea, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextFieldHilabetea, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextFieldEguna, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jComboBoxUrtea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxHilabetea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxEguna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldAurkariaSartu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jButtonGehitu)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldAurkariaSartu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(13, 13, 13)
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonKendu)
+                                .addGap(49, 49, 49))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel50)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(18, 18, 18)
                 .addComponent(jButtonPartidaJokatu)
-                .addGap(30, 30, 30))
+                .addGap(18, 18, 18))
         );
 
         pack();
@@ -291,22 +354,74 @@ public class JokatutakoPartidak extends javax.swing.JFrame {
 
     private void jButtonPartidaJokatuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPartidaJokatuActionPerformed
         // TODO add your handling code here:
-        String urtea = jTextFieldUrtea.getText();
-        String hilabetea = jTextFieldHilabetea.getText();
-        String eguna = jTextFieldEguna.getText();
+        String urtea = jComboBoxUrtea.getSelectedItem().toString();
+        String hilabetea = jComboBoxHilabetea.getSelectedItem().toString();
+        String eguna = jComboBoxEguna.getSelectedItem().toString();
         String aurkaria = jTextFieldAurkariaSartu.getText();
+        ArrayList<Futbolista> txartelak = new ArrayList();
+
+        //Txartelak gorde 
+        for (int i = 0; i < jListTxartelak.getModel().getSize(); i++) {
+            String futbolariarenDatuak = jListTxartelak.getModel().getElementAt(i);
+            txartelak.add(new Futbolista(Integer.parseInt(futbolariarenDatuak.substring(0, 2)), futbolariarenDatuak.substring(4), null, 0, 0, null));
+        }
         
-        if(!urtea.equals("") && !hilabetea.equals("") && !eguna.equals("") && !aurkaria.equals("")){
-            PartidaKudeatu.partidaJokatu(urtea, hilabetea, eguna, aurkaria);
+        //Partida jokatu
+        if (!urtea.equals("") && !hilabetea.equals("") && !eguna.equals("") && !aurkaria.equals("")) {
+            PartidaKudeatu.partidaJokatu(urtea, hilabetea, eguna, aurkaria, txartelak);
             datuakEguneratu();
-            jTextFieldUrtea.setText("");
-            jTextFieldHilabetea.setText("");
-            jTextFieldEguna.setText("");
+            jComboBoxUrtea.setSelectedIndex(0);
+            jComboBoxHilabetea.setSelectedIndex(0);
+            jComboBoxEguna.setSelectedIndex(0);
             jTextFieldAurkariaSartu.setText("");
-        }else{
+            resetLista();
+        } else {
+            resetLista();
             System.out.println("Datuak falta dira");
         }
     }//GEN-LAST:event_jButtonPartidaJokatuActionPerformed
+
+    private void jButtonGehituActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGehituActionPerformed
+        // TODO add your handling code here:
+        //Jokalaria txartelen listan sartu
+        DefaultListModel listaTxartelak = new DefaultListModel();
+        for (int i = 0; i < jListTxartelak.getModel().getSize(); i++) {
+            listaTxartelak.addElement(jListTxartelak.getModel().getElementAt(i));
+        }
+        listaTxartelak.addElement(jListJokalariak.getSelectedValue());
+        jListTxartelak.setModel(listaTxartelak);
+
+        //Jokalaria jokalarien listatik kendu
+        DefaultListModel listaJokalariak = new DefaultListModel();
+        for (int i = 0; i < jListJokalariak.getModel().getSize(); i++) {
+            listaJokalariak.addElement(jListJokalariak.getModel().getElementAt(i));
+        }
+        listaJokalariak.remove(jListJokalariak.getSelectedIndex());
+        jListJokalariak.setModel(listaJokalariak);
+    }//GEN-LAST:event_jButtonGehituActionPerformed
+
+    private void jButtonKenduActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonKenduActionPerformed
+        // TODO add your handling code here:        
+        //Jokalaria jokalarien listan sartu
+        DefaultListModel listaJokalariak = new DefaultListModel();
+        for (int i = 0; i < jListJokalariak.getModel().getSize(); i++) {
+            listaJokalariak.addElement(jListJokalariak.getModel().getElementAt(i));
+        }
+        listaJokalariak.addElement(jListTxartelak.getSelectedValue());
+        jListJokalariak.setModel(listaJokalariak);
+
+        //Jokalaria txartelen listatik kendu
+        DefaultListModel listaTxartelak = new DefaultListModel();
+        for (int i = 0; i < jListTxartelak.getModel().getSize(); i++) {
+            listaTxartelak.addElement(jListTxartelak.getModel().getElementAt(i));
+        }
+        listaTxartelak.remove(jListTxartelak.getSelectedIndex());
+        jListTxartelak.setModel(listaTxartelak);
+    }//GEN-LAST:event_jButtonKenduActionPerformed
+
+    private void jComboBoxUrteaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxUrteaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxUrteaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -344,7 +459,12 @@ public class JokatutakoPartidak extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonGehitu;
+    private javax.swing.JButton jButtonKendu;
     private javax.swing.JButton jButtonPartidaJokatu;
+    private javax.swing.JComboBox<String> jComboBoxEguna;
+    private javax.swing.JComboBox<String> jComboBoxHilabetea;
+    private javax.swing.JComboBox<String> jComboBoxUrtea;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -366,8 +486,5 @@ public class JokatutakoPartidak extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextAreaDatak;
     private javax.swing.JTextArea jTextAreaTxartelak;
     private javax.swing.JTextField jTextFieldAurkariaSartu;
-    private javax.swing.JTextField jTextFieldEguna;
-    private javax.swing.JTextField jTextFieldHilabetea;
-    private javax.swing.JTextField jTextFieldUrtea;
     // End of variables declaration//GEN-END:variables
 }

@@ -201,18 +201,22 @@ public class PartidaKudeatu {
                 }
             }
             if(ateratakoTxartelak > 0){
-                return partaidea.getNombre() + ", " + ateratakoTxartelak;
+                return partaidea.getNombre() + " " + partaidea.getApellido() + ", " + ateratakoTxartelak;
             }
         }
         return null;
     }
     
-    public static void partidaJokatu(String urteaStr,String hilabeteaStr,String egunaStr,String aurkaria){
+    public static void partidaJokatu(String urteaStr,String hilabeteaStr,String egunaStr,String aurkaria,ArrayList<Futbolista> txartelak){
         int urtea = Integer.parseInt(urteaStr);
         int hilabetea = Integer.parseInt(hilabeteaStr);
         int eguna = Integer.parseInt(egunaStr);
+        ArrayList<Futbolista> jarritakoTxartelak = txartelak;
         
         partidak[sortutakoPartidak] = new Partida(LocalDate.of(urtea, hilabetea, eguna), aurkaria);
+        for (int i = 0; i < jarritakoTxartelak.size(); i++) {
+            partidak[sortutakoPartidak].txartelaJarri(jarritakoTxartelak.get(i));
+        }
         sortutakoPartidak++;
     }
 
