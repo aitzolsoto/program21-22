@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.Arrays;
+
 /**
  *
  * @author soto.aitzol
@@ -16,6 +18,14 @@ public class Enpresa implements Bezeroa{
     private String helbidea;
     private String[] kontaktoenEmailak;
 
+    public Enpresa(int kodea, String izenJuridikoa, String izenKomertziala,String helbidea, String[] kontaktoenEmailak){
+        this.kodea = kodea;
+        this.izenJuridikoa = izenJuridikoa;
+        this.izenKomertziala = izenKomertziala;
+        this.helbidea = helbidea;
+        this.kontaktoenEmailak = kontaktoenEmailak;
+    }
+    
     @Override
     public int getKodea() {
         return kodea;
@@ -33,6 +43,13 @@ public class Enpresa implements Bezeroa{
 
     @Override
     public String getEmaila() {
-        return "";
+        return kontaktoenEmailak[0];
     }
+
+    @Override
+    public String toString() {
+        return "Enpresa{" + "kodea=" + kodea + ", izenJuridikoa=" + izenJuridikoa + ", izenKomertziala=" + izenKomertziala + ", helbidea=" + helbidea + ", kontaktoenEmailak=" + kontaktoenEmailak + '}';
+    }
+    
+    
 }

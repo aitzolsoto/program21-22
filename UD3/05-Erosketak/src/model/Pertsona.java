@@ -15,6 +15,14 @@ public class Pertsona implements Bezeroa{
     private String abizena;
     private String helbidea;
     private String emaila;
+    
+    public Pertsona(int kodea, String izena, String abizena, String helbidea, String emaila){
+        this.kodea = kodea;
+        this.izena = izena;
+        this.abizena = abizena;
+        this.helbidea = helbidea;
+        this.emaila = emaila;
+    }
 
     @Override
     public int getKodea() {
@@ -34,5 +42,10 @@ public class Pertsona implements Bezeroa{
     @Override
     public String getEmaila() {
         return emaila;
+    }
+
+    @Override
+    public String toString() {
+        return "Pertsona{" + "kodea=" + kodea + ", izena=" + izena + ", abizena=" + abizena + ", helbidea=" + helbidea + ", emaila=" + emaila + '}';
     }
 }
