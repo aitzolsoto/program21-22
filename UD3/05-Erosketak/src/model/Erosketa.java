@@ -14,7 +14,6 @@ import java.util.ArrayList;
  * @author soto.aitzol
  */
 public class Erosketa {
-
     protected char[] kodea;
     protected LocalDate data;
     protected Bezeroa bezeroa;
@@ -30,7 +29,7 @@ public class Erosketa {
 
     public Erosketa(String kodea, String data, Bezeroa eroslea, ArrayList<Produktua> produktuak, ArrayList<Integer> unitateak, double guztira) {
         this.kodea = kodea.toCharArray();
-        this.data = LocalDate.of(Integer.parseInt(data.substring(6, 10)), Integer.parseInt(data.substring(3, 5)), Integer.parseInt(data.substring(0, 2)));
+        this.data = LocalDate.of(Integer.parseInt(data.substring(0, 4)), Integer.parseInt(data.substring(5, 7)), Integer.parseInt(data.substring(8, 10)));
         this.bezeroa = eroslea;
         this.produktuak = produktuak;
         this.unitateak = unitateak;
@@ -56,16 +55,25 @@ public class Erosketa {
     }
 
     public String toStringLuzea() {
-        return "EROSKETA \n"
+        String bezeroaStr = "EROSKETA \n"
                 + "Kodea: " + getKodeaStr() + " ,Data: " + data
                 + "\nBezeroa: " + bezeroa.getKodea()
                 + "\nIzena: " + bezeroa.getIzena()
                 + "\nHelbidea: " + bezeroa.getHelbidea()
-                + "\nEmaila: " + bezeroa.getEmaila()
-                + "\n"+ produktuak.toString();
-                
-                
-
+                + "\nEmaila: " + bezeroa.getEmaila();
+               
+        
+        for (int i = 0; i < produktuak.size(); i++) {
+            bezeroaStr = bezeroaStr + "\n" + (i+1) + ".produktua: " + produktuak.get(i).getKodeaStr() + ", " + produktuak.get(i).getIzena() + "," + unitateak.get(i) +"," +produktuak.get(i).getPrezioa();
+        }
+        
+        if(guztiraEgiaztatu()){
+            bezeroaStr = bezeroaStr + "\n\tGUZTIRA = " + guztira;
+        }else{
+            bezeroaStr = bezeroaStr + "\n\tGUZTIRA = " + null;
+        }
+        
+        return bezeroaStr;
     }
 
     public char[] getKodea() {

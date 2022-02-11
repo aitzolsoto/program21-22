@@ -32,7 +32,7 @@ public class TestErosketak {
         ArrayList<Integer> unitateak = new ArrayList<>();
         unitateak.add(15);
 
-        Erosketa erosketa1 = new Erosketa("E18-01", "24/10/2019", b1, produktuak, unitateak, 6750);
+        Erosketa erosketa1 = new Erosketa("E18-01", "2019/10/24", b1, produktuak, unitateak, 6750);
         System.out.println(erosketa1.toString());
         if (erosketa1.guztiraEgiaztatu()) {
             System.out.println("Datuak zuzenak dira");
@@ -46,7 +46,7 @@ public class TestErosketak {
         produktuak.add(new Produktua("C02", "Hp Pavilion", 600));
         unitateak.add(25);
 
-        Erosketa erosketa2 = new Erosketa("E21-01", "09/02/2019", enpresa1, produktuak, unitateak, 15000);
+        Erosketa erosketa2 = new Erosketa("E21-01", "2019/02/09", enpresa1, produktuak, unitateak, 15000);
         System.out.println(erosketa2.toStringLuzea());
         if (erosketa2.guztiraEgiaztatu()) {
             System.out.println("Datuak zuzenak dira");
@@ -65,7 +65,7 @@ public class TestErosketak {
         unitateak.add(1);
         unitateak.add(1);
 
-        EpekakoErosketa erosketa3 = new EpekakoErosketa("E21-01", "17/01/2020", b1, produktuak, unitateak, 3250,300);
+        EpekakoErosketa erosketa3 = new EpekakoErosketa("E21-01", "2020/01/17", b1, produktuak, unitateak, 3250,300);
         System.out.println(erosketa3.toStringLuzea());
         if (erosketa3.guztiraEgiaztatu()) {
             System.out.println("Datuak zuzenak dira");
