@@ -65,7 +65,7 @@ public class TestErosketak {
         unitateak.add(1);
         unitateak.add(1);
 
-        EpekakoErosketa erosketa3 = new EpekakoErosketa("E21-01", "2020/01/17", b1, produktuak, unitateak, 3250,300);
+        EpekakoErosketa erosketa3 = new EpekakoErosketa("E21-01", "2020/01/17", b2, produktuak, unitateak, 3250,300);
         System.out.println(erosketa3.toStringLuzea());
         if (erosketa3.guztiraEgiaztatu()) {
             System.out.println("Datuak zuzenak dira");
@@ -74,5 +74,7 @@ public class TestErosketak {
         }
         
         System.out.println(erosketa3.gainetikOrdainduBeharrekoa());
+        
+        
     }
 }

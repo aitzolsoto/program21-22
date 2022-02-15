@@ -25,6 +25,7 @@ public class Erosketa {
         this.kodea = kodea.toCharArray();
         this.bezeroa = bezeroa;
         this.guztira = guztira;
+        this.data = LocalDate.now();
     }
 
     public Erosketa(String kodea, String data, Bezeroa eroslea, ArrayList<Produktua> produktuak, ArrayList<Integer> unitateak, double guztira) {
@@ -41,16 +42,17 @@ public class Erosketa {
         for (int i = 0; i < produktuak.size(); i++) {
             zenbatekoa += produktuak.get(i).getPrezioa() * unitateak.get(i);
         }
-        
         if(zenbatekoa == guztira){
             return true;
-        }else{
-            return false;
         }
+        return false;
     }
 
     @Override
     public String toString() {
+        if(produktuak == null){
+            return "Erosketa{" + "kodea=" + getKodeaStr() + ", data=" + data + ", bezeroa=" + bezeroa.toString() + ", produktuak=" + "" + ", unitateak=" + 0 + ", guztira=" + guztira + '}';
+        }
         return "Erosketa{" + "kodea=" + getKodeaStr() + ", data=" + data + ", bezeroa=" + bezeroa.toString() + ", produktuak=" + produktuak.toString() + ", unitateak=" + unitateak + ", guztira=" + guztira + '}';
     }
 
@@ -82,5 +84,9 @@ public class Erosketa {
     
     public String getKodeaStr(){
         return String.valueOf(kodea);
+    }
+
+    public double getGuztira() {
+        return guztira;
     }
 }
