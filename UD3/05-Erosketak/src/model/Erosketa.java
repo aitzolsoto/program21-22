@@ -14,6 +14,7 @@ import java.util.ArrayList;
  * @author soto.aitzol
  */
 public class Erosketa {
+
     protected char[] kodea;
     protected LocalDate data;
     protected Bezeroa bezeroa;
@@ -36,13 +37,13 @@ public class Erosketa {
         this.unitateak = unitateak;
         this.guztira = guztira;
     }
-    
-    public boolean guztiraEgiaztatu(){
+
+    public boolean guztiraEgiaztatu() {
         int zenbatekoa = 0;
         for (int i = 0; i < produktuak.size(); i++) {
             zenbatekoa += produktuak.get(i).getPrezioa() * unitateak.get(i);
         }
-        if(zenbatekoa == guztira){
+        if (zenbatekoa == guztira) {
             return true;
         }
         return false;
@@ -50,7 +51,7 @@ public class Erosketa {
 
     @Override
     public String toString() {
-        if(produktuak == null){
+        if (produktuak == null) {
             return "Erosketa{" + "kodea=" + getKodeaStr() + ", data=" + data + ", bezeroa=" + bezeroa.toString() + ", produktuak=" + "" + ", unitateak=" + 0 + ", guztira=" + guztira + '}';
         }
         return "Erosketa{" + "kodea=" + getKodeaStr() + ", data=" + data + ", bezeroa=" + bezeroa.toString() + ", produktuak=" + produktuak.toString() + ", unitateak=" + unitateak + ", guztira=" + guztira + '}';
@@ -63,30 +64,54 @@ public class Erosketa {
                 + "\nIzena: " + bezeroa.getIzena()
                 + "\nHelbidea: " + bezeroa.getHelbidea()
                 + "\nEmaila: " + bezeroa.getEmaila();
-               
-        
+
         for (int i = 0; i < produktuak.size(); i++) {
-            bezeroaStr = bezeroaStr + "\n" + (i+1) + ".produktua: " + produktuak.get(i).getKodeaStr() + ", " + produktuak.get(i).getIzena() + "," + unitateak.get(i) +"," +produktuak.get(i).getPrezioa();
+            bezeroaStr = bezeroaStr + "\n" + (i + 1) + ".produktua: " + produktuak.get(i).getKodeaStr() + ", " + produktuak.get(i).getIzena() + "," + unitateak.get(i) + "," + produktuak.get(i).getPrezioa();
         }
-        
-        if(guztiraEgiaztatu()){
+
+        if (guztiraEgiaztatu()) {
             bezeroaStr = bezeroaStr + "\n\tGUZTIRA = " + guztira;
-        }else{
+        } else {
             bezeroaStr = bezeroaStr + "\n\tGUZTIRA = " + null;
         }
-        
+
         return bezeroaStr;
+    }
+
+    public static double guztiraKalkulatu(ArrayList<Produktua> erositakoProduktuak, ArrayList<Integer> erositakoUnitateak) {
+        double erosketaGuztira = 0;
+        for (int i = 0; i < erositakoProduktuak.size(); i++) {
+            erosketaGuztira = erositakoProduktuak.get(i).getPrezioa() * erositakoUnitateak.get(i);
+        }
+        return erosketaGuztira;
     }
 
     public char[] getKodea() {
         return kodea;
     }
-    
-    public String getKodeaStr(){
+
+    public String getKodeaStr() {
         return String.valueOf(kodea);
     }
 
     public double getGuztira() {
         return guztira;
     }
+
+    public void setBezeroa(Bezeroa bezeroa) {
+        this.bezeroa = bezeroa;
+    }
+
+    public void setGuztira(double guztira) {
+        this.guztira = guztira;
+    }
+
+    public Bezeroa getBezeroa() {
+        return bezeroa;
+    }
+
+    public LocalDate getData() {
+        return data;
+    }
+
 }

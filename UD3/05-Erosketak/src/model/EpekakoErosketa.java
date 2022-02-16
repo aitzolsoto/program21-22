@@ -24,4 +24,10 @@ public class EpekakoErosketa extends Erosketa{
     public double gainetikOrdainduBeharrekoa(){
         return kuota * epeak - guztira;
     }
+
+    public double getKuota() {
+        return kuota;
+    }
+    
+    
 }

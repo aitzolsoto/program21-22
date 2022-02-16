@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import model.Bezeroa;
 import model.Enpresa;
+import model.EpekakoErosketa;
 import model.Erosketa;
 import model.Pertsona;
 import model.Produktua;
@@ -88,7 +89,6 @@ public class ErosketakKudeatu {
     public static void create() throws IndexOutOfBoundsException {
         ArrayList<Produktua> erosketakoProduktuak = new ArrayList<>();
         ArrayList<Integer> erosketakoUnitateak = new ArrayList<>();
-        double erosketaGuztira = 0;
         char produktuenAukera = 'B';
         char epekakoErosketaDa;
 
@@ -108,15 +108,13 @@ public class ErosketakKudeatu {
         }
         System.out.print("Epekako erosketa da(B/E)? ");
         epekakoErosketaDa = in.next().toUpperCase().charAt(0);
+        
         if (epekakoErosketaDa == 'B') {
-
+            erosketenZerrenda.add(new EpekakoErosketa(kodea, LocalDate.now().toString(), kontaktuak.get(Integer.parseInt(bezeroKodea)-1), erosketakoProduktuak, erosketakoUnitateak, Erosketa.guztiraKalkulatu(erosketakoProduktuak, erosketakoUnitateak),0));
         } else if (epekakoErosketaDa == 'E' && erosketakoProduktuak != null) {
-            for (int i = 0; i < erosketakoProduktuak.size(); i++) {
-                erosketaGuztira = erosketakoProduktuak.get(i).getPrezioa() * erosketakoUnitateak.get(i);
-            }
-            erosketenZerrenda.add(new Erosketa(kodea, LocalDate.now().toString(), kontaktuak.get(Integer.parseInt(bezeroKodea)), erosketakoProduktuak, erosketakoUnitateak, erosketaGuztira));
+            erosketenZerrenda.add(new Erosketa(kodea, LocalDate.now().toString(), kontaktuak.get(Integer.parseInt(bezeroKodea)-1), erosketakoProduktuak, erosketakoUnitateak, Erosketa.guztiraKalkulatu(erosketakoProduktuak, erosketakoUnitateak)));
         } else {
-            erosketenZerrenda.add(new Erosketa(kodea, LocalDate.now().toString(), kontaktuak.get(Integer.parseInt(bezeroKodea)), erosketakoProduktuak, erosketakoUnitateak, 0));
+            erosketenZerrenda.add(new Erosketa(kodea, LocalDate.now().toString(), kontaktuak.get(Integer.parseInt(bezeroKodea)-1), erosketakoProduktuak, erosketakoUnitateak, 0));
         }
     }
 
@@ -131,13 +129,13 @@ public class ErosketakKudeatu {
                     System.out.println("Fakturazio osoa: " + fakturazioOsoa());
                     break;
                 case 3:
-                    //bezerorik onena
+                    System.out.println("Bezerorik onena: " + bezerorikOnena().toString());
                     break;
                 case 4:
                     helbideaBilatu();
                     break;
                 case 5:
-                    //epekako erosketak
+                    epekakoErosketenTxostena();
                     break;
                 default:
                     System.out.println("");
@@ -148,10 +146,17 @@ public class ErosketakKudeatu {
 
     public static void update() {
         int erosketaZenbakia;
+        char aukera;
         System.out.print("Sartu erosketa zenbakia: ");
         erosketaZenbakia = in.nextInt();
-        if (erosketenZerrenda.get(erosketaZenbakia) != null) {
-            
+        if (erosketenZerrenda.get(erosketaZenbakia-1) != null) {
+            System.out.print("Erosketaren bezeroa aldatu nahi duzu(B/E)?");
+            aukera = in.next().toUpperCase().charAt(0);
+            if(aukera == 'B'){
+                System.out.print("Sartu bezero berriaren kodea: ");
+                int bezeroBerria = Integer.parseInt(in.next());
+                erosketenZerrenda.get(erosketaZenbakia-1).setBezeroa(kontaktuak.get(bezeroBerria-1));
+            }
         } else {
             System.out.println("Ez da erosketarik existitzen zenbaki horrekin");
         }
@@ -161,8 +166,8 @@ public class ErosketakKudeatu {
         int erosketaZenbakia;
         System.out.print("Sartu erosketa zenbakia: ");
         erosketaZenbakia = in.nextInt();
-        if (erosketenZerrenda.get(erosketaZenbakia) != null) {
-            erosketenZerrenda.remove(erosketaZenbakia);
+        if (erosketenZerrenda.get(erosketaZenbakia-1) != null) {
+            erosketenZerrenda.remove(erosketaZenbakia-1);
         } else {
             System.out.println("Ez da erosketarik existitzen zenbaki horrekin");
         }
@@ -183,6 +188,38 @@ public class ErosketakKudeatu {
             }
         }
         return fakturazioa;
+    }
+    
+    public static Bezeroa bezerorikOnena(){
+        Bezeroa bezerorikOnena = null;
+        Bezeroa konprobatzekoBezeroa = null;
+        double bezeroarenGastua = 0;
+        double gastuAltuena = 0;
+        for (int i = 0; i < kontaktuak.size(); i++) {
+            konprobatzekoBezeroa = kontaktuak.get(i);
+            bezeroarenGastua = 0;
+            for (int j = 0; j < erosketenZerrenda.size(); j++) {
+                if(konprobatzekoBezeroa.getKodea() == erosketenZerrenda.get(j).getBezeroa().getKodea()){
+                    bezeroarenGastua += erosketenZerrenda.get(j).getGuztira();
+                }
+            }
+            if(bezeroarenGastua > gastuAltuena){
+                bezerorikOnena = konprobatzekoBezeroa;
+                gastuAltuena = bezeroarenGastua;
+            }
+        }
+        
+        return bezerorikOnena;
+    }
+    
+    public static void epekakoErosketenTxostena(){
+        System.out.printf("%10s %10s %10s %10s %10s %10s", "KODEA","DATA","IZENA","GUZTIRA","EPEAK","KUOTA");
+        for (int i = 0; i < erosketenZerrenda.size(); i++) {
+            Erosketa konprobatzekoErosketa = erosketenZerrenda.get(i);
+            if(konprobatzekoErosketa instanceof EpekakoErosketa){
+                System.out.printf("\n%10d %10s %10s %10f %10s %10f", konprobatzekoErosketa.getBezeroa().getKodea(),konprobatzekoErosketa.getData(),konprobatzekoErosketa.getBezeroa().getIzena(),konprobatzekoErosketa.getGuztira(),"12",((EpekakoErosketa) konprobatzekoErosketa).getKuota());
+            }
+        }
     }
 
     public static void erosketenZerrenda() {
