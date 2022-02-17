@@ -44,6 +44,10 @@ public class Pertsona implements Bezeroa{
         return emaila;
     }
 
+    public String getAbizena() {
+        return abizena;
+    }
+    
     @Override
     public String toString() {
         return "Pertsona{" + "kodea=" + kodea + ", izena=" + izena + ", abizena=" + abizena + ", helbidea=" + helbidea + ", emaila=" + emaila + '}';

@@ -21,12 +21,21 @@ public class EpekakoErosketa extends Erosketa{
         this.kuota = kuota;
     }
     
+    public EpekakoErosketa(String kodea,String data, Bezeroa eroslea,ArrayList<Produktua>produktuak,ArrayList<Integer>unitateak){
+        super(kodea,data, eroslea,produktuak,unitateak);
+        this.kuota = (guztiraKalkulatu(produktuak, unitateak)/12)*1.1;
+    }
+    
     public double gainetikOrdainduBeharrekoa(){
         return kuota * epeak - guztira;
     }
 
     public double getKuota() {
         return kuota;
+    }
+
+    public void setKuota(double kuota) {
+        this.kuota = kuota;
     }
     
     

@@ -37,6 +37,15 @@ public class Erosketa {
         this.unitateak = unitateak;
         this.guztira = guztira;
     }
+    
+    public Erosketa(String kodea, String data, Bezeroa eroslea, ArrayList<Produktua> produktuak, ArrayList<Integer> unitateak) {
+        this.kodea = kodea.toCharArray();
+        this.data = LocalDate.of(Integer.parseInt(data.substring(0, 4)), Integer.parseInt(data.substring(5, 7)), Integer.parseInt(data.substring(8, 10)));
+        this.bezeroa = eroslea;
+        this.produktuak = produktuak;
+        this.unitateak = unitateak;
+        this.guztira = guztiraKalkulatu(produktuak, unitateak);
+    }
 
     public boolean guztiraEgiaztatu() {
         int zenbatekoa = 0;
@@ -78,7 +87,7 @@ public class Erosketa {
         return bezeroaStr;
     }
 
-    public static double guztiraKalkulatu(ArrayList<Produktua> erositakoProduktuak, ArrayList<Integer> erositakoUnitateak) {
+    public double guztiraKalkulatu(ArrayList<Produktua> erositakoProduktuak, ArrayList<Integer> erositakoUnitateak) {
         double erosketaGuztira = 0;
         for (int i = 0; i < erositakoProduktuak.size(); i++) {
             erosketaGuztira = erositakoProduktuak.get(i).getPrezioa() * erositakoUnitateak.get(i);
