@@ -5,34 +5,69 @@
  */
 package model;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import java.util.ArrayList;
+import javax.swing.table.AbstractTableModel;
 
 /**
  *
  * @author soto.aitzol
  */
-public class ProduktuenTableModela {
-    JFrame jframe;
-    public ProduktuenTableModela(){
-        jframe = new JFrame();
-        JLabel izenburua = new JLabel();
-        izenburua.setBounds(5, 150, 100, 30);
-        izenburua.setText("PRODUKTUAK");
-        String[][] produktuak = {{"J01","Ogia","1.5"},{"J02","Esnea","1.05"},{"J03","Madalenak","2.25"},{"J04","Mermelada","3.0"}};
-        String[] zutabeak = {"A","B","C"};
-        JTable produktuenTaula = new JTable(produktuak, zutabeak);
-        produktuenTaula.setLocation(30, 150);
-        JScrollPane scrollPane = new JScrollPane(produktuenTaula);
-        jframe.add(izenburua);
-        jframe.add(scrollPane);
-        jframe.setSize(500, 400);
-        jframe.setVisible(true);
-        jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+public class ProduktuenTableModela extends AbstractTableModel {
+
+    private final String[] zutabeIzenak = {"Kodea", "Izena", "Prezioa"};
+    ArrayList<Produktua> data = new ArrayList();
+
+    public ProduktuenTableModela() {
+        data.add(new Produktua("J01","Ogia",1.5));
+        data.add(new Produktua("J02","Esnea",1.05));
+        data.add(new Produktua("J03","Madalenak",2.25));
+        data.add(new Produktua("J04","Mermelada",3.0));
     }
-    public static void main(String[] args) {
-        new ProduktuenTableModela();
+
+    @Override
+    public int getRowCount() {
+        return data.size();
     }
+
+    @Override
+    public int getColumnCount() {
+        return zutabeIzenak.length;
+    }
+    
+    //Escribe los valores de manera especifica dependiendo de que tipo sean Boolean, double...
+    @Override
+    public Class getColumnClass(int columnIndex){
+        return getValueAt(0, columnIndex).getClass();
+    }
+    
+    @Override
+    public String getColumnName(int columnIndex){
+        return zutabeIzenak[columnIndex];
+    }
+    
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex){
+        if(columnIndex == 2){
+            return true;
+        }
+        return false;
+    }
+    
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex){
+    
+    
+    }
+
+    @Override
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        if(columnIndex == 0){
+            return data.get(rowIndex).getKodeaStr();
+        }else if (columnIndex == 1){
+            return data.get(rowIndex).getIzena();
+        }else if (columnIndex == 2){
+            return data.get(rowIndex).getPrezioa();
+        }
+        return null;
+    }
+
 }
