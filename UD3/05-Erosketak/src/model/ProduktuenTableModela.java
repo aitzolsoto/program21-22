@@ -54,7 +54,9 @@ public class ProduktuenTableModela extends AbstractTableModel {
     }
     
     public void setValueAt(Object aValue, int rowIndex, int columnIndex){
-    
+        if(columnIndex == 2){
+            data.get(rowIndex).setPrezioa((double)aValue);
+        }
     
     }
 
