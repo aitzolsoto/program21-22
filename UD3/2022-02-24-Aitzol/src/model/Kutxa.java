@@ -7,6 +7,7 @@ package model;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -27,7 +28,7 @@ public class Kutxa extends Laukizuzena{
 
     @Override
     public String toString() {
-        return "Kutxa{" + "altuera=" + altuera + '}';
+        return "Kutxa{" + "erpina = "+ getErpinBat() + ", kontrako erpina = "+ getKontrakoErpina() + ", altuera = " + altuera + ", bolumena = " + getBolumena() + '}';
     }
     
     public boolean isHandiagoa(Kutxa besteKutxaBat){
@@ -37,6 +38,40 @@ public class Kutxa extends Laukizuzena{
             return true;
         }
         return false;
+    }
+    
+    public int getBolumena(){
+        return ((this.getKontrakoErpina().getX() - this.getErpinBat().getX()) * (this.getKontrakoErpina().getY() - this.getErpinBat().getY()) * altuera);
+    }
+    
+    public int[] getErtzenLuzera(){
+        int ertza1 = this.getKontrakoErpina().getX() - this.getErpinBat().getX();
+        int ertza2 = this.getKontrakoErpina().getY() - this.getErpinBat().getY();
+        int[] ertzak = {ertza1,ertza2};
+        return ertzak;
+    }
+    
+    public static Kutxa handiena(Kutxa[] kutxaSorta){
+        Kutxa kutxaHandiena = kutxaSorta[0];
+        for (int i = 0; i < kutxaSorta.length; i++) {
+            if(kutxaHandiena.getBolumena() < kutxaSorta[i].getBolumena()){
+                kutxaHandiena = kutxaSorta[i];
+            }
+        }
+        return kutxaHandiena;
+    }
+    
+    public static void kutxenArrayaOrdenatu(ArrayList<Kutxa> kutxaSorta){
+        Kutxa temp;
+        for (int i = 0; i < kutxaSorta.size(); i++) {
+            for (int j = 0; j < kutxaSorta.size()-1; j++) {
+                if(kutxaSorta.get(j) != null && kutxaSorta.get(j+1) != null && (kutxaSorta.get(j).getBolumena() > kutxaSorta.get(j+1).getBolumena())){
+                    temp = kutxaSorta.get(j+1);
+                    kutxaSorta.set(j+1, kutxaSorta.get(j));
+                    kutxaSorta.set(j,temp);
+                }
+            }
+        }
     }
     
     @Override

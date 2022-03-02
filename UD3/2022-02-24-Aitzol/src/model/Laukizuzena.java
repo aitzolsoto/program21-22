@@ -53,6 +53,12 @@ public class Laukizuzena implements Marrazgarria{
         return Arrays.toString(getLauErpinenArraya());
     }
     
+    public boolean isInside(Puntua bestePuntua){
+        if(bestePuntua.getX() > erpinBat.getX() && bestePuntua.getX() < kontrakoErpina.getX() && bestePuntua.getY() > erpinBat.getY() && bestePuntua.getY() < kontrakoErpina.getY()){
+            return true;
+        }
+        return false;
+    }
     
     @Override
     public void marraztu() {

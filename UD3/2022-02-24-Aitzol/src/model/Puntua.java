@@ -53,6 +53,14 @@ public class Puntua implements Marrazgarria {
             return false;
         }
     }
+    
+    public void mugitu(int zenbat, int norantz){
+        if(norantz == 0){ //Ezkerra
+            x = x - zenbat;
+        }else if(norantz == 1){ //Eskuma
+            x = x + zenbat;
+        }
+    }
 
     @Override
     public String toString() {
