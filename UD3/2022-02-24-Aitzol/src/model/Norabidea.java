@@ -5,12 +5,10 @@
  */
 package model;
 
-import java.awt.Graphics;
-
 /**
  *
  * @author soto.aitzol
  */
-public interface Marrazgarria {
-    public void marraztu(Graphics g);
+public enum Norabidea {
+    EZK,ESK,GORA,BEHERA
 }

@@ -8,6 +8,7 @@ package frameak;
 import java.awt.Color;
 import java.awt.Graphics;
 import model.Kutxa;
+import model.Laukizuzena;
 import model.Puntua;
 
 /**
@@ -15,13 +16,18 @@ import model.Puntua;
  * @author soto.aitzol
  */
 public class MarraztuJFrame extends javax.swing.JFrame {
-
+    //private Puntua p1 = new Puntua();
+    //private Kutxa k1 = new Kutxa(new Puntua(),new Puntua(),0);
     /**
      * Creates new form MarraztuJFrame
      */
     public MarraztuJFrame() {
         initComponents();
         this.setResizable(false);
+        jComboBoxIrudia.addItem("Puntua");
+        jComboBoxIrudia.addItem("Laukizuzena");
+        jComboBoxIrudia.addItem("Kutxa");
+        jComboBoxIrudia.setSelectedIndex(1);
     }
 
     /**
@@ -37,6 +43,10 @@ public class MarraztuJFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTextFieldZabalera = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jTextFieldLuzera = new javax.swing.JTextField();
+        jComboBoxIrudia = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addMouseListener(new java.awt.event.MouseAdapter() {
@@ -55,13 +65,31 @@ public class MarraztuJFrame extends javax.swing.JFrame {
         jTextFieldZabalera.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldZabalera.setText("50");
 
+        jLabel3.setText("LUZERA");
+
+        jTextFieldLuzera.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextFieldLuzera.setText("40");
+
+        jComboBoxIrudia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        jComboBoxIrudia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxIrudiaActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("IRUDIA");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(624, Short.MAX_VALUE)
+                .addContainerGap(693, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldLuzera, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -69,7 +97,11 @@ public class MarraztuJFrame extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldZabalera, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextFieldZabalera, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBoxIrudia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -83,7 +115,15 @@ public class MarraztuJFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldZabalera, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addContainerGap(382, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jTextFieldLuzera, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxIrudia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addContainerGap(266, Short.MAX_VALUE))
         );
 
         pack();
@@ -115,13 +155,40 @@ public class MarraztuJFrame extends javax.swing.JFrame {
         int yKoor = evt.getY();
         int altuera = Integer.parseInt(jTextFieldAltuera.getText());
         int zabalera = Integer.parseInt(jTextFieldZabalera.getText());
-        Kutxa k1 = new Kutxa(new Puntua(xKoor,yKoor),new Puntua(xKoor+zabalera,yKoor-40),altuera);
+        int luzera = Integer.parseInt(jTextFieldLuzera.getText());
         Graphics g = this.getGraphics();
-        k1.marraztu(g);
+       
+        if(jComboBoxIrudia.getSelectedIndex() == 1){
+            Puntua p1 = new Puntua(xKoor,yKoor);
+            p1.marraztu(g);
+        }else if(jComboBoxIrudia.getSelectedIndex() == 2){
+            Laukizuzena l1 = new Laukizuzena(new Puntua(xKoor, yKoor), new Puntua(xKoor + zabalera, yKoor +luzera));
+            l1.marraztu(g);
+        }
+        else if (jComboBoxIrudia.getSelectedIndex() == 3) {
+            Kutxa k1 = new Kutxa(new Puntua(xKoor, yKoor), new Puntua(xKoor + zabalera, yKoor-luzera), altuera);
+            k1.marraztu(g);
+        }
+
     }//GEN-LAST:event_formMouseClicked
 
-    
-    
+    private void jComboBoxIrudiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxIrudiaActionPerformed
+        // TODO add your handling code here:
+        if(jComboBoxIrudia.getSelectedIndex() == 1){
+            jTextFieldAltuera.setEnabled(false);
+            jTextFieldZabalera.setEnabled(false);
+            jTextFieldLuzera.setEnabled(false);
+        }else if (jComboBoxIrudia.getSelectedIndex() == 2){
+            jTextFieldAltuera.setEnabled(false);
+            jTextFieldZabalera.setEnabled(true);
+            jTextFieldLuzera.setEnabled(true);
+        }else{
+            jTextFieldAltuera.setEnabled(true);
+            jTextFieldZabalera.setEnabled(true);
+            jTextFieldLuzera.setEnabled(true);
+        }
+    }//GEN-LAST:event_jComboBoxIrudiaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -158,9 +225,13 @@ public class MarraztuJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> jComboBoxIrudia;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField jTextFieldAltuera;
+    private javax.swing.JTextField jTextFieldLuzera;
     private javax.swing.JTextField jTextFieldZabalera;
     // End of variables declaration//GEN-END:variables
 }

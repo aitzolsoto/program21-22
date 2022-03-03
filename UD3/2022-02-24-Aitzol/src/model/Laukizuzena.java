@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -33,6 +34,16 @@ public class Laukizuzena implements Marrazgarria{
     public Puntua getKontrakoErpina() {
         return kontrakoErpina;
     }
+
+    public void setErpinBat(Puntua erpinBat) {
+        this.erpinBat = erpinBat;
+    }
+
+    public void setKontrakoErpina(Puntua kontrakoErpina) {
+        this.kontrakoErpina = kontrakoErpina;
+    }
+    
+    
     
     public Puntua[] getLauErpinenArraya(){
         Puntua[] erpinenArraya = {new Puntua(erpinBat.getX(),erpinBat.getY()),new Puntua(kontrakoErpina.getX(), erpinBat.getY()), new Puntua(kontrakoErpina.getX(), kontrakoErpina.getY()), new Puntua(erpinBat.getX(), kontrakoErpina.getY())};
@@ -59,10 +70,19 @@ public class Laukizuzena implements Marrazgarria{
         }
         return false;
     }
+
+    
+    public void marraztu() {
+       
+    }
     
     @Override
-    public void marraztu() {
-        
+    public void marraztu(Graphics g) {
+        int luzera = kontrakoErpina.getX() - erpinBat.getX();
+        int altuera = kontrakoErpina.getY() - erpinBat.getY();
+        g.drawRect(erpinBat.getX(), erpinBat.getY(), luzera, altuera);
+        //g.drawString(erpinBat.toString(), erpinBat.getX(), erpinBat.getY()-5);
+        //g.fillOval(erpinBat.getX(), erpinBat.getY(), 2, 2);
     }
     
 }

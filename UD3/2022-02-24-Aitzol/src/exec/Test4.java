@@ -5,8 +5,10 @@
  */
 package exec;
 
+import java.util.Scanner;
 import model.Kutxa;
 import model.Laukizuzena;
+import model.Norabidea;
 import model.Puntua;
 
 /**
@@ -15,6 +17,7 @@ import model.Puntua;
  */
 public class Test4 {
     public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
         Kutxa k2 = new Kutxa(new Puntua(20,20),new Puntua(26,24),6);
         Kutxa k1 = new Kutxa(new Puntua(10,20),new Puntua(15,22),8);
         Kutxa k3 = new Kutxa(new Puntua(21,22),new Puntua(26,24),10);
@@ -28,7 +31,10 @@ public class Test4 {
         System.out.println(lauki2.isInside(new Puntua(14,20)));
         System.out.println(Kutxa.handiena(kutxaSorta));
         
-        puntua1.mugitu(5, 1);
+        System.out.print("Sartu zenbat mugitu nahi duzun puntua eta zein norabidetan(EZK/ESK/GORA/BEHERA): ");
+        int zenbat = Integer.parseInt(in.next());
+        Norabidea norabidea = Norabidea.valueOf(in.next().toUpperCase());
+        puntua1.mugitu(zenbat, norabidea);
         System.out.println(puntua1);
     }
 }

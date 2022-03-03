@@ -79,6 +79,7 @@ public class Kutxa extends Laukizuzena{
         System.out.println("Oinarria: " + super.toString() + " eta altuera:" + altuera + " dituen kutxa GUI baten marraztua izan da.");
     }
     
+    @Override
     public void marraztu(Graphics g){
         g.setColor(Color.black);
         //Beheko laukia

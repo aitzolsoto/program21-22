@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.awt.Graphics;
+
 /**
  *
  * @author soto.aitzol
@@ -54,11 +56,15 @@ public class Puntua implements Marrazgarria {
         }
     }
     
-    public void mugitu(int zenbat, int norantz){
-        if(norantz == 0){ //Ezkerra
+    public void mugitu(int zenbat, Norabidea norabidea){
+        if(norabidea == Norabidea.EZK){ //Ezkerra
             x = x - zenbat;
-        }else if(norantz == 1){ //Eskuma
+        }else if(norabidea == Norabidea.ESK){ //Eskuma
             x = x + zenbat;
+        }else if (norabidea == Norabidea.GORA){
+            y = y + zenbat;
+        }else if (norabidea == Norabidea.BEHERA){
+            y = y - zenbat;
         }
     }
 
@@ -96,8 +102,14 @@ public class Puntua implements Marrazgarria {
     
     
 
-    @Override
+    
     public void marraztu() {
         System.out.println(this + " puntua GUI baten marraztua izan da");
+    }
+    
+    @Override
+    public void marraztu(Graphics g) {
+        g.drawString(this.toString(), x, y-5);
+        g.fillOval(x, y, 5, 5);
     }
 }
