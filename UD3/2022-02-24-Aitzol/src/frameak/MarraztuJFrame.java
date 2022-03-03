@@ -7,6 +7,7 @@ package frameak;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import javax.swing.border.EmptyBorder;
 import model.Kutxa;
 import model.Laukizuzena;
 import model.Puntua;
@@ -24,10 +25,14 @@ public class MarraztuJFrame extends javax.swing.JFrame {
     public MarraztuJFrame() {
         initComponents();
         this.setResizable(false);
+        jComboBoxIrudia.removeItemAt(0);
         jComboBoxIrudia.addItem("Puntua");
         jComboBoxIrudia.addItem("Laukizuzena");
         jComboBoxIrudia.addItem("Kutxa");
-        jComboBoxIrudia.setSelectedIndex(1);
+        jComboBoxIrudia.setSelectedIndex(0);
+        
+        jButtonReset.setBackground(new Color(0x2dce98));
+        jButtonReset.setBorder(new EmptyBorder(5, 15, 5, 15));
     }
 
     /**
@@ -47,6 +52,7 @@ public class MarraztuJFrame extends javax.swing.JFrame {
         jTextFieldLuzera = new javax.swing.JTextField();
         jComboBoxIrudia = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
+        jButtonReset = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addMouseListener(new java.awt.event.MouseAdapter() {
@@ -79,6 +85,13 @@ public class MarraztuJFrame extends javax.swing.JFrame {
 
         jLabel4.setText("IRUDIA");
 
+        jButtonReset.setText("Reset");
+        jButtonReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonResetActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -101,7 +114,8 @@ public class MarraztuJFrame extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
-                        .addComponent(jComboBoxIrudia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jComboBoxIrudia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonReset, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -123,7 +137,9 @@ public class MarraztuJFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBoxIrudia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addContainerGap(266, Short.MAX_VALUE))
+                .addGap(37, 37, 37)
+                .addComponent(jButtonReset)
+                .addContainerGap(206, Short.MAX_VALUE))
         );
 
         pack();
@@ -158,36 +174,40 @@ public class MarraztuJFrame extends javax.swing.JFrame {
         int luzera = Integer.parseInt(jTextFieldLuzera.getText());
         Graphics g = this.getGraphics();
        
-        if(jComboBoxIrudia.getSelectedIndex() == 1){
+        if(jComboBoxIrudia.getSelectedIndex() == 0){
             Puntua p1 = new Puntua(xKoor,yKoor);
             p1.marraztu(g);
-        }else if(jComboBoxIrudia.getSelectedIndex() == 2){
+        }else if(jComboBoxIrudia.getSelectedIndex() == 1){
             Laukizuzena l1 = new Laukizuzena(new Puntua(xKoor, yKoor), new Puntua(xKoor + zabalera, yKoor +luzera));
             l1.marraztu(g);
         }
-        else if (jComboBoxIrudia.getSelectedIndex() == 3) {
+        else if (jComboBoxIrudia.getSelectedIndex() == 2) {
             Kutxa k1 = new Kutxa(new Puntua(xKoor, yKoor), new Puntua(xKoor + zabalera, yKoor-luzera), altuera);
             k1.marraztu(g);
         }
-
     }//GEN-LAST:event_formMouseClicked
 
     private void jComboBoxIrudiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxIrudiaActionPerformed
         // TODO add your handling code here:
-        if(jComboBoxIrudia.getSelectedIndex() == 1){
+        if(jComboBoxIrudia.getSelectedIndex() == 0){
             jTextFieldAltuera.setEnabled(false);
             jTextFieldZabalera.setEnabled(false);
             jTextFieldLuzera.setEnabled(false);
-        }else if (jComboBoxIrudia.getSelectedIndex() == 2){
+        }else if (jComboBoxIrudia.getSelectedIndex() == 1){
             jTextFieldAltuera.setEnabled(false);
             jTextFieldZabalera.setEnabled(true);
             jTextFieldLuzera.setEnabled(true);
-        }else{
+        }else if (jComboBoxIrudia.getSelectedIndex() == 2){
             jTextFieldAltuera.setEnabled(true);
             jTextFieldZabalera.setEnabled(true);
             jTextFieldLuzera.setEnabled(true);
         }
     }//GEN-LAST:event_jComboBoxIrudiaActionPerformed
+
+    private void jButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResetActionPerformed
+        // TODO add your handling code here:
+        repaint();
+    }//GEN-LAST:event_jButtonResetActionPerformed
 
     /**
      * @param args the command line arguments
@@ -225,6 +245,7 @@ public class MarraztuJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonReset;
     private javax.swing.JComboBox<String> jComboBoxIrudia;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

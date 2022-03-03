@@ -44,7 +44,6 @@ public class Laukizuzena implements Marrazgarria{
     }
     
     
-    
     public Puntua[] getLauErpinenArraya(){
         Puntua[] erpinenArraya = {new Puntua(erpinBat.getX(),erpinBat.getY()),new Puntua(kontrakoErpina.getX(), erpinBat.getY()), new Puntua(kontrakoErpina.getX(), kontrakoErpina.getY()), new Puntua(erpinBat.getX(), kontrakoErpina.getY())};
         return erpinenArraya;
