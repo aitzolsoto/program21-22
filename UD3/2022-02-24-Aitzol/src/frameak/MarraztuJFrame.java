@@ -7,7 +7,6 @@ package frameak;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import javax.swing.border.EmptyBorder;
 import model.Kutxa;
 import model.Laukizuzena;
 import model.Puntua;
@@ -32,7 +31,6 @@ public class MarraztuJFrame extends javax.swing.JFrame {
         jComboBoxIrudia.setSelectedIndex(0);
         
         jButtonReset.setBackground(new Color(0x2dce98));
-        jButtonReset.setBorder(new EmptyBorder(5, 15, 5, 15));
     }
 
     /**
