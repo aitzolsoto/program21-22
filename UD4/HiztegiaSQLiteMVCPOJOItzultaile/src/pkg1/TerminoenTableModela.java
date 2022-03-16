@@ -16,12 +16,17 @@ public class TerminoenTableModela extends AbstractTableModel{
     private final String[] zutabeIzenak = {"ID", "EUSKARAZ", "GAZTELERAZ"};
     ArrayList<Terminoa> terminoak = new ArrayList();
     
-    public TerminoenTableModela(){
-        this.terminoak = null;
+    public TerminoenTableModela(ArrayList<Terminoa> dTerminoak){
+        this.terminoak = dTerminoak;
     }
     @Override
     public int getRowCount() {
         return terminoak.size();
+    }
+    
+    @Override
+    public String getColumnName(int columnIndex){
+        return zutabeIzenak[columnIndex];
     }
 
     @Override

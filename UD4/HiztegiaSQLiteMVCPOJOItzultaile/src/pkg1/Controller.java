@@ -33,6 +33,8 @@ public class Controller implements ActionListener {
         view.jButtonTerminoaTxertatu.addActionListener(listener);
         view.jButtonHiztegiaInprimatu.addActionListener(listener);
         view.jButtonHiztegiaItxi.addActionListener(listener);
+        view.jButtonTerminoaItzuli.addActionListener(listener);
+        view.jButtonTerminoaEzabatu.addActionListener(listener);
     }
 
     @Override
@@ -46,10 +48,11 @@ public class Controller implements ActionListener {
                 view.jDialogTerminoaGehitu.setVisible(true);
                 break;
             case "TXERTATU":
-                System.out.println("TXERTATU botoia sakatu duzu");
                 Terminoa t1 = new Terminoa(view.jTextFieldTxertatuEuskaraz.getText(), view.jTextFieldTxertatuGazteleraz.getText());
                 model.terminoaGehitu(t1);
                 view.jDialogTerminoaGehitu.dispose();
+                view.jTextFieldTxertatuEuskaraz.setText("");
+                view.jTextFieldTxertatuGazteleraz.setText("");
                 break;
             case "HIZTEGIA INPRIMATU":
                 model.terminoakInprimatu();
@@ -59,6 +62,14 @@ public class Controller implements ActionListener {
                 break;
             case "HIZTEGIA ITXI":
                 view.jDialogHiztegiaInprimatu.dispose();
+                break;
+            case "ITZULI":
+                Terminoa t2 = model.terminoaItzuli(view.jTextFieldItzultzaileaEuskaraz.getText());
+                view.jTextFieldItzultzaileaGazteleraz.setText(t2.getGazteleraz());
+                break;
+            case "EZABATU":
+                view.jTextFieldItzultzaileaEuskaraz.setText("");
+                view.jTextFieldItzultzaileaGazteleraz.setText("");
                 break;
             case "IRTEN":
                 view.dispose();

@@ -14,6 +14,12 @@ public class Terminoa {
     private String euskaraz;
     private String gazteleraz;
     
+    public Terminoa(){
+        this.id = 0;
+        this.euskaraz = "";
+        this.gazteleraz = "";
+    }
+    
     public Terminoa(String euskaraz,String gazteleraz){
         this.id = 0;
         this.euskaraz = euskaraz;
