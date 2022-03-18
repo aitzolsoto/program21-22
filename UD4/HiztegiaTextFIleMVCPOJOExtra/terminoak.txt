@@ -2,3 +2,4 @@
 2,euria,lluvia
 3,kaixo,hola
 4,aulkia,silla
+5,marrubia,fresa

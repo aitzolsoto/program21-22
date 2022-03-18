@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -50,14 +51,44 @@ public class Model {
         }
         return jasotakoTerminoak;
     }
+    
+    public void taularaGehitu(JTable taula,String euskaraz, String gazteleraz){
+        int lerroKopurua = taula.getRowCount();
+        Terminoa t1 = new Terminoa(lerroKopurua+1,euskaraz,gazteleraz);
+        for (int i = 0; i < taula.getColumnCount(); i++) {
+            if(i == 0){
+                taula.setValueAt(t1.getId(), lerroKopurua+1, i);
+            }else if(i == 1){
+                taula.setValueAt(t1.getEuskaraz(), lerroKopurua+1, i);
+            }else if(i == 2){
+                taula.setValueAt(t1.getGazteleraz(), lerroKopurua+1, i);
+            }
+        }
+    }
 
-    public void terminoakGorde(String areakoTestua) {
+    public void taulakoaGorde(JTable taula) {
         BufferedReader inputStream = null;
         PrintWriter outputStream = null;
+        Terminoa t1 = new Terminoa();
+        int id = 0;
+        String euskaraz = "";
+        String gazteleraz = "";
 
         try {
-            outputStream = new PrintWriter(new FileWriter("gordetakoTerminoak.txt"));
-            outputStream.print(areakoTestua);
+            outputStream = new PrintWriter(new FileWriter("gordetakoTaulakoTerminoak.txt"));
+            for (int i = 0; i < taula.getRowCount(); i++) {
+                for (int j = 0; j < taula.getColumnCount(); j++) {
+                    if (j == 0) {
+                        id = Integer.parseInt(taula.getValueAt(i, j).toString());
+                    } else if (j == 1) {
+                        euskaraz = taula.getValueAt(i, j).toString();
+                    } else if (j == 2) {
+                        gazteleraz = taula.getValueAt(i, j).toString();
+                    }
+                }
+                t1 = new Terminoa(id, euskaraz, gazteleraz);
+                outputStream.println(t1);
+            }
         } catch (FileNotFoundException e) {
             System.out.println(e);
         } catch (IOException e) {
@@ -68,4 +99,6 @@ public class Model {
             }
         }
     }
+
+    
 }
