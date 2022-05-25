@@ -39,10 +39,21 @@ public class View extends javax.swing.JFrame {
         jLabelBizitzak = new javax.swing.JLabel();
         jLabelGaldu = new javax.swing.JLabel();
         jButtonHasiBerriro = new javax.swing.JButton();
+        jDialogHiztegia = new javax.swing.JDialog();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableTerminoenTaula = new javax.swing.JTable();
+        jLabel5 = new javax.swing.JLabel();
+        jTextFieldItzuliEuskaraz = new javax.swing.JTextField();
+        jTextFieldItzuliGazteleraz = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jButtonItzultzailea = new javax.swing.JButton();
+        jButtonItzultzaileaEzabatu = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jButtonHitzaGehituDialog = new javax.swing.JButton();
         jButtonHitzaAsmatuDialog = new javax.swing.JButton();
+        jButtonHiztegia = new javax.swing.JButton();
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel2.setText("HITZ BERRIA");
@@ -178,6 +189,71 @@ public class View extends javax.swing.JFrame {
                 .addGap(31, 31, 31))
         );
 
+        jScrollPane1.setViewportView(jTableTerminoenTaula);
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("HIZTEGIA");
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel7.setText("Euskaraz");
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel8.setText("Gazteleraz");
+
+        jButtonItzultzailea.setText("ITZULI");
+
+        jButtonItzultzaileaEzabatu.setText("EZABATU");
+
+        javax.swing.GroupLayout jDialogHiztegiaLayout = new javax.swing.GroupLayout(jDialogHiztegia.getContentPane());
+        jDialogHiztegia.getContentPane().setLayout(jDialogHiztegiaLayout);
+        jDialogHiztegiaLayout.setHorizontalGroup(
+            jDialogHiztegiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialogHiztegiaLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(183, 183, 183))
+            .addGroup(jDialogHiztegiaLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jDialogHiztegiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDialogHiztegiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialogHiztegiaLayout.createSequentialGroup()
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(32, 32, 32))
+                        .addComponent(jTextFieldItzuliGazteleraz, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldItzuliEuskaraz, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jDialogHiztegiaLayout.createSequentialGroup()
+                        .addComponent(jButtonItzultzailea)
+                        .addGap(40, 40, 40)
+                        .addComponent(jButtonItzultzaileaEzabatu)))
+                .addContainerGap(27, Short.MAX_VALUE))
+        );
+        jDialogHiztegiaLayout.setVerticalGroup(
+            jDialogHiztegiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialogHiztegiaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
+                .addGroup(jDialogHiztegiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDialogHiztegiaLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldItzuliEuskaraz, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldItzuliGazteleraz, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
+                        .addGroup(jDialogHiztegiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonItzultzailea)
+                            .addComponent(jButtonItzultzaileaEzabatu)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(57, 57, 57))
+        );
+
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
 
@@ -192,20 +268,24 @@ public class View extends javax.swing.JFrame {
 
         jButtonHitzaAsmatuDialog.setText("HITZA ASMATU");
 
+        jButtonHiztegia.setText("HIZTEGIA");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(78, 78, 78)
-                .addComponent(jButtonHitzaGehituDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
-                .addComponent(jButtonHitzaAsmatuDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(68, 68, 68))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(152, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(135, 135, 135))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(jButtonHitzaGehituDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54)
+                .addComponent(jButtonHitzaAsmatuDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonHiztegia, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,7 +295,8 @@ public class View extends javax.swing.JFrame {
                 .addGap(79, 79, 79)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonHitzaGehituDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonHitzaAsmatuDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonHitzaAsmatuDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonHiztegia, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(132, Short.MAX_VALUE))
         );
 
@@ -287,21 +368,32 @@ public class View extends javax.swing.JFrame {
     public javax.swing.JButton jButtonHitzaAsmatuDialog;
     public javax.swing.JButton jButtonHitzaGehituDialog;
     public javax.swing.JButton jButtonHitzaSartu;
+    public javax.swing.JButton jButtonHiztegia;
+    public javax.swing.JButton jButtonItzultzailea;
+    public javax.swing.JButton jButtonItzultzaileaEzabatu;
     public javax.swing.JDialog jDialogGehitu;
+    public javax.swing.JDialog jDialogHiztegia;
     public javax.swing.JDialog jDialogJolasa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     public javax.swing.JLabel jLabelAsmatzekoHitza;
     public javax.swing.JLabel jLabelBizitzak;
     public javax.swing.JLabel jLabelGaldu;
     public javax.swing.JLabel jLabelPuntuazioZenbakia;
     public javax.swing.JLabel jLabelPuntuazioa;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    public javax.swing.JTable jTableTerminoenTaula;
     public javax.swing.JTextField jTextFieldGehituEuskaraz;
     public javax.swing.JTextField jTextFieldGehituGazteleraz;
+    public javax.swing.JTextField jTextFieldItzuliEuskaraz;
+    public javax.swing.JTextField jTextFieldItzuliGazteleraz;
     public javax.swing.JTextField jTextFieldSartutakoHitza;
     // End of variables declaration//GEN-END:variables
 }

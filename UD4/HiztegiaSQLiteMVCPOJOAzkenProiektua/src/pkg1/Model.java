@@ -43,7 +43,7 @@ public class Model {
 
             int kont = 0;
             while (rs.next()) {
-                Terminoa t = new Terminoa(rs.getInt("id"),rs.getString("euskaraz"),rs.getString("gazteleraz"));
+                Terminoa t = new Terminoa(rs.getInt("id"), rs.getString("euskaraz"), rs.getString("gazteleraz"));
                 System.out.println(t);
                 kont++;
             }
@@ -121,8 +121,8 @@ public class Model {
             pstmt.setString(1, euskarazkoa);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                Terminoa t = new Terminoa(rs.getInt("id"),rs.getString("euskaraz"),rs.getString("gazteleraz"));
-                System.out.println(t);                
+                Terminoa t = new Terminoa(rs.getInt("id"), rs.getString("euskaraz"), rs.getString("gazteleraz"));
+                System.out.println(t);
             }
 
         } catch (SQLException e) {
@@ -130,7 +130,8 @@ public class Model {
         }
 
     }
-      public int terminoaGehitu(Terminoa t) {
+
+    public int terminoaGehitu(Terminoa t) {
 
         String sql = "INSERT INTO Terminoak(id,euskaraz,gazteleraz) VALUES(?,?,?)";
 
@@ -145,8 +146,8 @@ public class Model {
             return 0;
         }
     }
-      
-    public int terminoKopurua(){
+
+    public int terminoKopurua() {
         String taula = "Terminoak";
         String sql = "SELECT count(id) FROM " + taula;
 
@@ -155,32 +156,29 @@ public class Model {
             while (rs.next()) {
                 return rs.getInt("count(id)");
             }
-            
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return 0;
     }
-    
-    public boolean terminoaErrepikatuta(String tEuskaraz,String tGazteleraz){
-        Terminoa t = new Terminoa(0,"","");
+
+    public boolean terminoaErrepikatuta(String tEuskaraz, String tGazteleraz) {
+        Terminoa t = new Terminoa(0, "", "");
         String taula = "Terminoak";
-        String sql = "SELECT euskaraz, gazteleraz FROM " + taula + "where euskaraz = ?";
+        String sql = "SELECT euskaraz, gazteleraz FROM " + taula + " where euskaraz = ? or gazteleraz = ?";
 
         try ( Connection conn = konektatu();  PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, tEuskaraz.toUpperCase());
-            //pstmt.setString(2, tGazteleraz.toUpperCase());
+            pstmt.setString(2, tGazteleraz.toUpperCase());
             ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                t = new Terminoa(0, rs.getString("euskaraz"), rs.getString("gazteleraz"));
-            }
-            if(t.getEuskaraz().equals("")){
-                return false;
+            if (rs.next()) {
+                return true;
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return true;
+        return false;
     }
 
     public int terminoaGehituObjektuGabe(int id, String euskaraz, String gazteleraz) {
@@ -212,8 +210,8 @@ public class Model {
             System.out.println(e.getMessage());
             return 0;
         }
-
     }
+    
 
     /**
      * Kontuz: lechuga');DELETE FROM Terminoak;--
@@ -235,34 +233,34 @@ public class Model {
             System.out.println(ex.getMessage());
         }
     }
-    
-    public String hitzaErakutsi(){
+
+    public String hitzaErakutsi() {
         ArrayList<Terminoa> erakustekoTerminoak = new ArrayList<>();
         String sql = "Select id,euskaraz from Terminoak";
         try ( Connection conn = konektatu();  PreparedStatement pstmt = conn.prepareStatement(sql)) {
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                Terminoa t = new Terminoa(rs.getInt("id"),rs.getString("euskaraz"),"");
-                erakustekoTerminoak.add(t);              
+                Terminoa t = new Terminoa(rs.getInt("id"), rs.getString("euskaraz"), "");
+                erakustekoTerminoak.add(t);
             }
-            return erakustekoTerminoak.get((int)(Math.random()*erakustekoTerminoak.size())).getEuskaraz();
+            return erakustekoTerminoak.get((int) (Math.random() * erakustekoTerminoak.size())).getEuskaraz();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return "";
     }
-    
-    public boolean hitzaKonprobatu(String asmatuBeharrekoHitza, String sartutakoHitza){
-        Terminoa t =  new Terminoa(0,"","");
+
+    public boolean hitzaKonprobatu(String asmatuBeharrekoHitza, String sartutakoHitza) {
+        Terminoa t = new Terminoa(0, "", "");
         String sql = "Select gazteleraz from Terminoak where euskaraz = ?";
         try ( Connection conn = konektatu();  PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, asmatuBeharrekoHitza);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-               t = new Terminoa(0,"",rs.getString("gazteleraz"));
+                t = new Terminoa(0, "", rs.getString("gazteleraz"));
             }
-            
-            if(sartutakoHitza.toLowerCase().equals(t.getGazteleraz().toLowerCase())){
+
+            if (sartutakoHitza.toLowerCase().equals(t.getGazteleraz().toLowerCase())) {
                 return true;
             }
         } catch (SQLException e) {
@@ -271,5 +269,52 @@ public class Model {
         return false;
     }
     
+    public ArrayList<Terminoa> terminoakTaulara(){ 
+        ArrayList<Terminoa> terminoGuztiak = new ArrayList<>();
+        String sql = "Select id,euskaraz,gazteleraz from Terminoak";
+        try ( Connection conn = konektatu();  PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Terminoa t = new Terminoa(rs.getInt("id"), rs.getString("euskaraz"), rs.getString("gazteleraz"));
+                terminoGuztiak.add(t);
+            }
+            return terminoGuztiak;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
     
+    public String terminoaItzuliGaztelerara(String euskaraz){
+        String sql = "Select euskaraz,gazteleraz from Terminoak where euskaraz = ?";
+        try ( Connection conn = konektatu();  PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, euskaraz);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next()) {
+                Terminoa t = new Terminoa(0, rs.getString("euskaraz"), rs.getString("gazteleraz"));
+                return t.getGazteleraz();
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return "";
+    }
+    
+    public String terminoaItzuliEuskerara(String gazteleraz){
+        String sql = "Select euskaraz,gazteleraz from Terminoak where gazteleraz = ?";
+        try ( Connection conn = konektatu();  PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, gazteleraz);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next()) {
+                Terminoa t = new Terminoa(0, rs.getString("euskaraz"), rs.getString("gazteleraz"));
+                return t.getEuskaraz();
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return "";
+    }
+
 }
