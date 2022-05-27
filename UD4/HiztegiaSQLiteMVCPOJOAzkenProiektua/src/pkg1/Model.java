@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import javax.swing.JTable;
 
 public class Model {
 
@@ -147,16 +148,34 @@ public class Model {
         }
     }
 
+//    public int terminoKopurua() {
+//        String taula = "Terminoak";
+//        String sql = "SELECT count(id) FROM " + taula;
+//
+//        try ( Connection conn = konektatu();  PreparedStatement pstmt = conn.prepareStatement(sql)) {
+//            ResultSet rs = pstmt.executeQuery();
+//            while (rs.next()) {
+//                return rs.getInt("count(id)");
+//            }
+//
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+//        return 0;
+//    }
     public int terminoKopurua() {
+        ArrayList<Terminoa> terminoak = new ArrayList<>();
         String taula = "Terminoak";
-        String sql = "SELECT count(id) FROM " + taula;
+        String sql = "SELECT id,euskaraz,gazteleraz FROM " + taula;
 
         try ( Connection conn = konektatu();  PreparedStatement pstmt = conn.prepareStatement(sql)) {
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                return rs.getInt("count(id)");
+                Terminoa t1 = new Terminoa(rs.getInt("id"),rs.getString("euskaraz"),rs.getString("gazteleraz"));
+                terminoak.add(t1);
             }
-
+            int id = (terminoak.get(terminoak.size()-1).getId())+1;
+            return id;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -211,7 +230,6 @@ public class Model {
             return 0;
         }
     }
-    
 
     /**
      * Kontuz: lechuga');DELETE FROM Terminoak;--
@@ -268,8 +286,8 @@ public class Model {
         }
         return false;
     }
-    
-    public ArrayList<Terminoa> terminoakTaulara(){ 
+
+    public ArrayList<Terminoa> terminoakTaulara() {
         ArrayList<Terminoa> terminoGuztiak = new ArrayList<>();
         String sql = "Select id,euskaraz,gazteleraz from Terminoak";
         try ( Connection conn = konektatu();  PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -284,13 +302,13 @@ public class Model {
         }
         return null;
     }
-    
-    public String terminoaItzuliGaztelerara(String euskaraz){
+
+    public String terminoaItzuliGaztelerara(String euskaraz) {
         String sql = "Select euskaraz,gazteleraz from Terminoak where euskaraz = ?";
         try ( Connection conn = konektatu();  PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, euskaraz);
             ResultSet rs = pstmt.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 Terminoa t = new Terminoa(0, rs.getString("euskaraz"), rs.getString("gazteleraz"));
                 return t.getGazteleraz();
             }
@@ -300,13 +318,13 @@ public class Model {
         }
         return "";
     }
-    
-    public String terminoaItzuliEuskerara(String gazteleraz){
+
+    public String terminoaItzuliEuskerara(String gazteleraz) {
         String sql = "Select euskaraz,gazteleraz from Terminoak where gazteleraz = ?";
         try ( Connection conn = konektatu();  PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, gazteleraz);
             ResultSet rs = pstmt.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 Terminoa t = new Terminoa(0, rs.getString("euskaraz"), rs.getString("gazteleraz"));
                 return t.getEuskaraz();
             }
@@ -315,6 +333,12 @@ public class Model {
             System.out.println(e.getMessage());
         }
         return "";
+    }
+
+    public void terminoaEzabatuTaulatik(JTable taula) {
+        System.out.println(taula.getValueAt(taula.getSelectedRow(), 0));
+        int id = Integer.parseInt(taula.getValueAt(taula.getSelectedRow(), 0).toString());
+        terminoaEzabatu(id);
     }
 
 }

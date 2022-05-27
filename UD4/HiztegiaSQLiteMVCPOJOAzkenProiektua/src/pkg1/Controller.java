@@ -30,9 +30,10 @@ public class Controller implements ActionListener {
         view.jButtonHitzaSartu.addActionListener(listener);
         view.jButtonHitzBerriaGehitu.addActionListener(listener);
         view.jButtonHasiBerriro.addActionListener(listener);
-        view.jButtonHiztegia.addActionListener(listener);
+        view.jButtonItzultzaileaDialog.addActionListener(listener);
         view.jButtonItzultzailea.addActionListener(listener);
         view.jButtonItzultzaileaEzabatu.addActionListener(listener);
+        view.jButtonTerminoaEzabatu.addActionListener(listener);
     }
 
     @Override
@@ -40,10 +41,11 @@ public class Controller implements ActionListener {
         String actionCommand = e.getActionCommand();
         //listenerrak entzun dezakeen eragiketa bakoitzeko. Konponenteek 'actionCommad' propietatea daukate
         switch (actionCommand) {
-            case "HITZA GEHITU":
-                view.jDialogGehitu.setSize(431, 317);
+            case "HIZTEGIA":
+                view.jDialogGehitu.setSize(657, 367);
                 view.jDialogGehitu.setVisible(true);
                 view.jDialogGehitu.setResizable(false);
+                view.jTableTerminoenTaula.setModel(new HiztegiaTableModel(model.terminoakTaulara()));
                 break;
             case "TXERTATU":
                 Terminoa t = new Terminoa(3, view.jTextFieldGehituEuskaraz.getText().toUpperCase(), view.jTextFieldGehituGazteleraz.getText().toUpperCase());
@@ -54,6 +56,7 @@ public class Controller implements ActionListener {
                 }else{
                     System.out.println("Ez dago errepikatuta");
                     model.terminoaGehitu(t);
+                    view.jTableTerminoenTaula.setModel(new HiztegiaTableModel(model.terminoakTaulara()));
                 }
                 break;
             case "INPRIMATU":
@@ -111,11 +114,10 @@ public class Controller implements ActionListener {
                 view.jLabelGaldu.setVisible(false);
                 view.jButtonHasiBerriro.setVisible(false);
                 break;  
-            case "HIZTEGIA":
-                view.jDialogHiztegia.setSize(535, 333);
-                view.jDialogHiztegia.setVisible(true);
-                view.jDialogHiztegia.setResizable(false);
-                view.jTableTerminoenTaula.setModel(new HiztegiaTableModel(model.terminoakTaulara()));
+            case "ITZULTZAILEA":
+                view.jDialogItzultzailea.setSize(347, 300);
+                view.jDialogItzultzailea.setVisible(true);
+                view.jDialogItzultzailea.setResizable(false);
                 break;
             case "ITZULI":
                 if(!view.jTextFieldItzuliEuskaraz.getText().equals("") && view.jTextFieldItzuliGazteleraz.getText().equals("")){
@@ -128,6 +130,9 @@ public class Controller implements ActionListener {
                 view.jTextFieldItzuliEuskaraz.setText("");
                 view.jTextFieldItzuliGazteleraz.setText("");
                 break;
+            case "TERMINOA EZABATU":
+                model.terminoaEzabatuTaulatik(view.jTableTerminoenTaula);
+                view.jTableTerminoenTaula.setModel(new HiztegiaTableModel(model.terminoakTaulara()));
         }
     }
 }
