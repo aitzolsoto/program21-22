@@ -20,7 +20,7 @@ public class Controller implements ActionListener {
         this.model = model;
         this.view = view;
         gehituActionListener(this);
-        
+
     }
 
     private void gehituActionListener(ActionListener listener) {
@@ -49,22 +49,26 @@ public class Controller implements ActionListener {
                 break;
             case "TXERTATU":
                 Terminoa t = new Terminoa(3, view.jTextFieldGehituEuskaraz.getText().toUpperCase(), view.jTextFieldGehituGazteleraz.getText().toUpperCase());
-                view.jTextFieldGehituEuskaraz.setText("");
-                view.jTextFieldGehituGazteleraz.setText("");
-                if(model.terminoaErrepikatuta(t.getEuskaraz(),t.getGazteleraz())){
-                    System.out.println("Errepikatuta");
-                }else{
+                if (view.jTextFieldGehituEuskaraz.getText().isEmpty() || view.jTextFieldGehituGazteleraz.getText().isEmpty()) {
+                    System.out.println("Hitza falta da");
+                    view.jOptionPaneMezua.showMessageDialog(null, "Hitza falta da");
+                } else if (model.terminoaErrepikatuta(t.getEuskaraz(), t.getGazteleraz())) {
+                    System.out.println("Hitza errepikatuta dago");
+                    view.jOptionPaneMezua.showMessageDialog(null, "Hitza errepikatuta dago");
+                } else {
                     System.out.println("Ez dago errepikatuta");
                     model.terminoaGehitu(t);
                     view.jTableTerminoenTaula.setModel(new HiztegiaTableModel(model.terminoakTaulara()));
                 }
+                view.jTextFieldGehituEuskaraz.setText("");
+                view.jTextFieldGehituGazteleraz.setText("");
                 break;
             case "INPRIMATU":
                 System.out.println("INPRIMATU botoia sakatu duzu");
                 model.terminoakInprimatu();
                 break;
             case "HITZA ASMATU":
-                view.jDialogJolasa.setSize(470,335);
+                view.jDialogJolasa.setSize(470, 335);
                 view.jDialogJolasa.setResizable(false);
                 view.jDialogJolasa.setVisible(true);
                 view.jLabelAsmatzekoHitza.setText(model.hitzaErakutsi());
@@ -77,19 +81,19 @@ public class Controller implements ActionListener {
                 view.jButtonHitzaSartu.setEnabled(true);
                 break;
             case "SARTU":
-                if(!view.jTextFieldSartutakoHitza.getText().equals("") && bizitzak > 0 && model.hitzaKonprobatu(view.jLabelAsmatzekoHitza.getText(), view.jTextFieldSartutakoHitza.getText())){
+                if (!view.jTextFieldSartutakoHitza.getText().equals("") && bizitzak > 0 && model.hitzaKonprobatu(view.jLabelAsmatzekoHitza.getText(), view.jTextFieldSartutakoHitza.getText())) {
                     System.out.println("Asmatu duzu");
                     view.jTextFieldSartutakoHitza.setText("");
                     view.jLabelAsmatzekoHitza.setText(model.hitzaErakutsi());
                     puntuazioa = Integer.parseInt(view.jLabelPuntuazioZenbakia.getText());
                     puntuazioa += 1;
                     view.jLabelPuntuazioZenbakia.setText(String.valueOf(puntuazioa));
-                }else if(!view.jTextFieldSartutakoHitza.getText().equals("") && bizitzak > 1 && !model.hitzaKonprobatu(view.jLabelAsmatzekoHitza.getText(), view.jTextFieldSartutakoHitza.getText())){
+                } else if (!view.jTextFieldSartutakoHitza.getText().equals("") && bizitzak > 1 && !model.hitzaKonprobatu(view.jLabelAsmatzekoHitza.getText(), view.jTextFieldSartutakoHitza.getText())) {
                     System.out.println("Ez duzu asmatu");
                     view.jTextFieldSartutakoHitza.setText("");
-                    bizitzak --;
+                    bizitzak--;
                     view.jLabelBizitzak.setText(String.valueOf(bizitzak));
-                }else if(!view.jTextFieldSartutakoHitza.getText().equals("") && bizitzak == 1 && !model.hitzaKonprobatu(view.jLabelAsmatzekoHitza.getText(), view.jTextFieldSartutakoHitza.getText())){
+                } else if (!view.jTextFieldSartutakoHitza.getText().equals("") && bizitzak == 1 && !model.hitzaKonprobatu(view.jLabelAsmatzekoHitza.getText(), view.jTextFieldSartutakoHitza.getText())) {
                     System.out.println("Galdu egin duzu");
                     view.jTextFieldSartutakoHitza.setText("");
                     view.jTextFieldSartutakoHitza.setEnabled(false);
@@ -99,7 +103,7 @@ public class Controller implements ActionListener {
                     view.jLabelGaldu.setVisible(true);
                     view.jLabelGaldu.setText("Galdu egin duzu, lortutako puntuazioa: " + view.jLabelPuntuazioZenbakia.getText());
                     view.jButtonHasiBerriro.setVisible(true);
-                }else if (view.jTextFieldSartutakoHitza.getText().equals("")){
+                } else if (view.jTextFieldSartutakoHitza.getText().equals("")) {
                     System.out.println("Hitz bat sartu behar duzu");
                 }
                 break;
@@ -113,17 +117,22 @@ public class Controller implements ActionListener {
                 view.jLabelPuntuazioZenbakia.setText(String.valueOf(puntuazioa));
                 view.jLabelGaldu.setVisible(false);
                 view.jButtonHasiBerriro.setVisible(false);
-                break;  
+                break;
             case "ITZULTZAILEA":
                 view.jDialogItzultzailea.setSize(347, 300);
                 view.jDialogItzultzailea.setVisible(true);
                 view.jDialogItzultzailea.setResizable(false);
                 break;
             case "ITZULI":
-                if(!view.jTextFieldItzuliEuskaraz.getText().equals("") && view.jTextFieldItzuliGazteleraz.getText().equals("")){
-                    view.jTextFieldItzuliGazteleraz.setText(model.terminoaItzuliGaztelerara(view.jTextFieldItzuliEuskaraz.getText().toUpperCase()));
-                }else if(view.jTextFieldItzuliEuskaraz.getText().equals("") && !view.jTextFieldItzuliGazteleraz.getText().equals("")){
-                    view.jTextFieldItzuliEuskaraz.setText(model.terminoaItzuliEuskerara(view.jTextFieldItzuliGazteleraz.getText().toUpperCase()));
+                if(view.jTextFieldItzuliEuskaraz.getText().isEmpty() && view.jTextFieldItzuliGazteleraz.getText().isEmpty()){
+                    view.jOptionPaneMezua.showMessageDialog(null, "Hitz bat sartu behar duzu");
+                }else if(model.terminoaItzuliGaztelerara(view.jTextFieldItzuliEuskaraz.getText()).isEmpty() && model.terminoaItzuliEuskerara(view.jTextFieldItzuliGazteleraz.getText()).isEmpty()){ 
+                    view.jOptionPaneMezua.showMessageDialog(null, "Ez da hitza aurkitu");
+                }else if(!view.jTextFieldItzuliEuskaraz.getText().equals("") && view.jTextFieldItzuliGazteleraz.getText().equals("")){ //Hitza gaztelerara
+                    view.jTextFieldItzuliGazteleraz.setText(model.terminoaItzuliGaztelerara(view.jTextFieldItzuliEuskaraz.getText()));         
+                }else if (view.jTextFieldItzuliEuskaraz.getText().equals("") && !view.jTextFieldItzuliGazteleraz.getText().equals("")) { //Hitza euskerara
+                    view.jTextFieldItzuliEuskaraz.setText(model.terminoaItzuliEuskerara(view.jTextFieldItzuliGazteleraz.getText()));
+                    System.out.println(model.terminoaItzuliEuskerara(view.jTextFieldItzuliGazteleraz.getText()));
                 }
                 break;
             case "EZABATU":

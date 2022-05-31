@@ -306,6 +306,7 @@ public class Model {
     public String terminoaItzuliGaztelerara(String euskaraz) {
         String sql = "Select euskaraz,gazteleraz from Terminoak where euskaraz = ?";
         try ( Connection conn = konektatu();  PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            euskaraz = euskaraz.toUpperCase();
             pstmt.setString(1, euskaraz);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
@@ -322,6 +323,7 @@ public class Model {
     public String terminoaItzuliEuskerara(String gazteleraz) {
         String sql = "Select euskaraz,gazteleraz from Terminoak where gazteleraz = ?";
         try ( Connection conn = konektatu();  PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            gazteleraz = gazteleraz.toUpperCase();
             pstmt.setString(1, gazteleraz);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
